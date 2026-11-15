@@ -22,7 +22,7 @@ export function useWorkflowsInfo(active = true): WorkflowsInfo | null {
       .then((response) => (response.ok ? response.json() : null))
       .then((data: Partial<WorkflowsInfo> | null) => {
         if (cancelled) return;
-        setInfo(data && Array.isArray(data.workflows) ? { ...UNAVAILABLE, ...data, enabled: data.enabled === true } as WorkflowsInfo : UNAVAILABLE);
+        setInfo(data && Array.isArray(data.workflows) ? ({ ...UNAVAILABLE, ...data, enabled: data.enabled === true } as WorkflowsInfo) : UNAVAILABLE);
       })
       .catch(() => { if (!cancelled) setInfo(UNAVAILABLE); });
     return () => { cancelled = true; };
@@ -58,7 +58,13 @@ export function WorkflowPicker({ value, onChange, disabled, available, labelId }
   };
 
   return (
-    <div data-tour="workflow-picker" role="radiogroup" aria-labelledby={labelId} aria-disabled={disabled || undefined} className="-mx-4 flex rounded-2xl snap-x snap-mandatory scroll-px-4 gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:grid sm:grid-cols-5 sm:overflow-visible sm:px-0 sm:pb-0">
+    <div
+      data-tour="workflow-picker"
+      role="radiogroup"
+      aria-labelledby={labelId}
+      aria-disabled={disabled || undefined}
+      className="-mx-4 flex rounded-3xl snap-x snap-mandatory scroll-px-4 gap-2.5 overflow-x-auto px-4 pb-1 sm:mx-0 sm:grid sm:grid-cols-5 sm:overflow-visible sm:px-0 sm:pb-0"
+    >
       {WORKFLOWS.map((id) => {
         const selectable = available.has(id);
         const checked = value === id;
@@ -83,13 +89,19 @@ export function WorkflowPicker({ value, onChange, disabled, available, labelId }
               }
             }}
             className={cn(
-              "group/workflow flex w-40 shrink-0 snap-start flex-col rounded-xl border bg-background p-3 text-left transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 sm:w-auto",
-              checked && "border-foreground ring-1 ring-foreground",
+              "group/workflow flex w-40 shrink-0 snap-start flex-col rounded-2xl border border-border/60 bg-card p-3 text-left transition-all duration-150 hover:bg-black/[0.02] dark:hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 active:scale-[0.98] cursor-pointer disabled:pointer-events-none disabled:opacity-40 sm:w-auto",
+              checked
+                ? "border-primary bg-primary/[0.05] dark:bg-primary/[0.1] ring-1 ring-primary shadow-xs"
+                : "shadow-2xs",
             )}
           >
             <WorkflowGlyph id={id} />
-            <span className="mt-2 block break-words text-sm font-medium">{t(`workflows.${id}.label`)}</span>
-            <span className="block break-words text-xs text-muted-foreground">{t(`workflows.${id}.hint`)}</span>
+            <span className={cn("mt-2.5 block break-words text-xs font-semibold leading-snug", checked ? "text-primary" : "text-foreground")}>
+              {t(`workflows.${id}.label`)}
+            </span>
+            <span className="block break-words text-[11px] text-muted-foreground mt-0.5 leading-tight">
+              {t(`workflows.${id}.hint`)}
+            </span>
           </button>
         );
       })}
@@ -122,23 +134,21 @@ function Link({ from, to, y = 38 }: { from: number; to: number; y?: number }) {
 }
 
 /** Colored only on the selected card, so one accent shows at a time. */
-const ACCENT = "text-foreground/70 group-aria-checked/workflow:text-brand";
+const ACCENT = "text-foreground/70 group-aria-checked/workflow:text-primary";
 
 /** What each workflow gives you from one video: the source along the bottom, the vertical clips it becomes on top. */
 export function WorkflowGlyph({ id, className }: { id: Workflow; className?: string }) {
   return (
-    <span className={cn("flex items-center justify-center rounded-lg bg-muted px-2 py-1.5", className)} aria-hidden>
-      <svg viewBox="0 0 120 70" className="h-[4.5rem] w-full max-w-36 text-foreground">
+    <span className={cn("flex items-center justify-center rounded-xl bg-black/[0.03] dark:bg-white/[0.06] px-2 py-1.5", className)} aria-hidden>
+      <svg viewBox="0 0 120 70" className="h-[4.25rem] w-full max-w-36 text-foreground">
         {id === "highlights" ? (
-          // A few standalone moments from anywhere in the video, the best one marked.
           <>
             <Link from={31} to={21} /><Link from={60} to={66} /><Link from={89} to={96} />
             <Source marks={[[15, 12], [59, 14], [90, 11]]} />
             <Tile x={22} /><Tile x={51} strong /><Tile x={80} />
-            <circle cx="69" cy="6" r="4" fill="currentColor" className={ACCENT} stroke="var(--muted)" strokeWidth="1.5" />
+            <circle cx="69" cy="6" r="4" fill="currentColor" className={ACCENT} stroke="var(--card)" strokeWidth="1.5" />
           </>
         ) : id === "series" ? (
-          // The whole video, cut end to end into numbered parts that follow on.
           <>
             <Link from={25} to={25} /><Link from={60} to={60} /><Link from={95} to={95} />
             <Source marks={[[8, 33.5], [43.25, 33.5], [78.5, 33.5]]} />
@@ -152,7 +162,6 @@ export function WorkflowGlyph({ id, className }: { id: Workflow; className?: str
             </g>
           </>
         ) : id === "topic" ? (
-          // A search picks out only the moments about one subject.
           <>
             <Link from={51} to={38} /><Link from={75} to={69} /><Link from={99} to={102} />
             <Source marks={[[33, 10], [64, 10], [97, 10]]} />
@@ -162,7 +171,6 @@ export function WorkflowGlyph({ id, className }: { id: Workflow; className?: str
             <Tile x={42} strong /><Tile x={66} strong /><Tile x={90} strong />
           </>
         ) : id === "recap" ? (
-          // Points from across the whole video, gathered into one clip that lists them.
           <>
             <Link from={50} to={14} y={40} /><Link from={55} to={37} y={40} /><Link from={60} to={60} y={40} /><Link from={65} to={83} y={40} /><Link from={70} to={106} y={40} />
             <Source marks={[[10, 8], [33, 8], [56, 8], [79, 8], [102, 8]]} />
@@ -176,7 +184,6 @@ export function WorkflowGlyph({ id, className }: { id: Workflow; className?: str
             </Tile>
           </>
         ) : (
-          // Quick cuts make one teaser that points back to the full video.
           <>
             <Link from={37} to={15} /><Link from={41} to={38} /><Link from={45} to={58} /><Link from={49} to={84} />
             <Source marks={[[13, 4], [36, 4], [56, 4], [82, 4]]} />

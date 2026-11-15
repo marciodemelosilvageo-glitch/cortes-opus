@@ -880,10 +880,10 @@ export default function HomeApp() {
         {monetizationEnabled && upgradeState?.needsPayment && <PaymentFailedBanner className="mb-8" />}
 
         <div className="mx-auto max-w-3xl animate-rise">
-          <h1 className="text-center font-display text-3xl font-bold tracking-tight sm:text-[2.6rem] sm:leading-tight">
+          <h1 className="text-center text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
             {greetingText(t, session.user.name)}
           </h1>
-          <p className="mt-2 text-center text-muted-foreground">
+          <p className="mt-1.5 text-center text-sm text-muted-foreground">
             {t(`subtitleByWorkflow.${activeWorkflow}`)}
           </p>
 
@@ -918,9 +918,9 @@ export default function HomeApp() {
               if (!controlsDisabled) attachFile(event.dataTransfer.files?.[0] ?? null);
             }}
             className={cn(
-              "relative rounded-2xl border bg-background shadow-[0_1px_2px_rgb(0_0_0/0.04),0_12px_40px_-12px_rgb(0_0_0/0.12)] transition-all focus-within:border-foreground/25 focus-within:shadow-[0_1px_2px_rgb(0_0_0/0.04),0_16px_48px_-12px_rgb(0_0_0/0.18)]",
+              "relative rounded-3xl border border-border/60 bg-card/90 ios-blur backdrop-blur-2xl shadow-[0_4px_24px_-4px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_30px_-4px_rgba(0,0,0,0.45)] transition-all focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/20",
               workflowsEnabled ? "mt-4" : "mt-8",
-              isDragging && "border-brand ring-4 ring-brand/15",
+              isDragging && "border-primary ring-4 ring-primary/20",
             )}
           >
             <input
@@ -1366,9 +1366,9 @@ export default function HomeApp() {
                   size="icon"
                   aria-label={t(`generateByWorkflow.${activeWorkflow}`)}
                   disabled={!hasSource || isLoading || lengthLoading || awaitingWorkflows || topicProblem !== null || instructionsTooLong || advancedProblem !== null}
-                  className="size-9 rounded-full bg-brand text-brand-foreground shadow-sm hover:bg-brand/90 disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100"
+                  className="size-10 rounded-full bg-primary text-white shadow-sm hover:brightness-105 active:scale-95 disabled:bg-black/10 dark:disabled:bg-white/10 disabled:text-muted-foreground disabled:opacity-40"
                 >
-                  {isLoading ? <Loader2 className="size-4 animate-spin" /> : <ArrowUp className="size-4" />}
+                  {isLoading ? <Loader2 className="size-4 animate-spin" /> : <ArrowUp className="size-4 stroke-[2.5]" />}
                 </Button>
               </div>
             </div>
@@ -1442,8 +1442,8 @@ function Chip({ active, className, children, ...props }: React.ComponentProps<"b
     <button
       type="button"
       className={cn(
-        "inline-flex h-8 items-center gap-1.5 rounded-full border px-2.5 text-xs font-medium text-foreground/80 transition-colors hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-accent",
-        active && "border-foreground/30 bg-accent text-foreground",
+        "inline-flex h-8 items-center gap-1.5 rounded-full border border-border/60 bg-black/[0.03] dark:bg-white/[0.05] px-3 text-xs font-semibold tracking-tight text-foreground/80 transition-all duration-150 ease-out hover:bg-black/[0.06] dark:hover:bg-white/[0.1] hover:text-foreground active:scale-[0.96] disabled:pointer-events-none disabled:opacity-40 cursor-pointer select-none",
+        active && "border-primary bg-primary/10 text-primary dark:bg-primary/20",
         className,
       )}
       {...props}
