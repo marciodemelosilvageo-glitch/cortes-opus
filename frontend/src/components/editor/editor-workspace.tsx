@@ -344,19 +344,19 @@ export function EditorWorkspace({
     key === "space" ? t("keys.space") : key === "shift" ? t("keys.shift") : key === "mod" ? t("keys.mod") : key;
   return (
     // data-editor-studio hides the app's floating feedback button, which would cover the timeline.
-    <div data-editor-studio="" className="flex min-h-dvh flex-col bg-stone-100 lg:h-dvh lg:overflow-hidden dark:bg-stone-950">
-      <header className="flex shrink-0 flex-wrap items-center gap-x-3 gap-y-2 px-3 py-2 lg:h-14 lg:flex-nowrap lg:py-0">
-        <Button variant="ghost" size="icon" className="rounded-full" asChild>
+    <div data-editor-studio="" className="flex min-h-dvh flex-col bg-background lg:h-dvh lg:overflow-hidden">
+      <header className="flex shrink-0 flex-wrap items-center gap-x-3 gap-y-2 px-4 py-2 border-b border-border/40 bg-card/80 ios-blur backdrop-blur-2xl lg:h-14 lg:flex-nowrap lg:py-0">
+        <Button variant="ghost" size="icon" className="rounded-full size-9" asChild>
           <Link href={`/tasks/${taskId}`} aria-label={t("editPage.back")}>
-            <ArrowLeft />
+            <ArrowLeft className="size-4" />
           </Link>
         </Button>
         <div className="flex min-w-0 flex-1 items-center gap-2">
-          <h1 className="min-w-0 truncate text-sm font-semibold">{title}</h1>
-          <span aria-hidden className="text-muted-foreground">/</span>
+          <h1 className="min-w-0 truncate text-xs font-semibold text-foreground">{title}</h1>
+          <span aria-hidden className="text-muted-foreground/60">/</span>
           <Popover open={clipsOpen} onOpenChange={setClipsOpen}>
             <PopoverTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-8 shrink-0 gap-1.5 rounded-full bg-background px-3 shadow-[0_1px_2px_rgb(0_0_0/0.05)] ring-1 ring-black/[0.06] hover:bg-background/80 dark:ring-white/10" aria-label={t("workspace.switchClip")}>
+              <Button variant="ghost" size="sm" className="h-8 shrink-0 gap-1.5 rounded-full bg-black/[0.04] dark:bg-white/[0.06] border border-border/60 px-3 text-xs font-semibold hover:bg-black/[0.08] dark:hover:bg-white/[0.1]" aria-label={t("workspace.switchClip")}>
                 <span
                   aria-hidden
                   className="h-5 w-3 shrink-0 rounded-[2px] bg-muted"
@@ -491,7 +491,7 @@ export function EditorWorkspace({
                 <MoreHorizontal />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-64">
+            <DropdownMenuContent align="end" className="w-64 rounded-2xl border border-border/60 bg-card/95 ios-blur backdrop-blur-2xl shadow-xl">
               <DropdownMenuItem disabled={!doc} onSelect={() => setRestoreOpen(true)}>
                 <RotateCcw />
                 {t("workspace.restore")}

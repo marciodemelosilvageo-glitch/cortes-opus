@@ -16,7 +16,7 @@ export function Panel({ className, ...props }: ComponentProps<"section">) {
   return (
     <section
       className={cn(
-        "min-w-0 overflow-hidden rounded-2xl bg-background text-foreground shadow-[0_1px_2px_rgb(0_0_0/0.04)] ring-1 ring-black/[0.06] dark:ring-white/10",
+        "min-w-0 overflow-hidden rounded-2xl bg-card border border-border/60 text-card-foreground shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_16px_rgba(0,0,0,0.35)]",
         className,
       )}
       {...props}

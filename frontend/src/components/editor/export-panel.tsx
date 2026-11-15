@@ -259,22 +259,22 @@ export function ExportPanel({
   ];
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-h-[90vh] gap-5 overflow-y-auto sm:max-w-lg">
+      <DialogContent className="max-h-[90vh] gap-5 overflow-y-auto sm:max-w-lg rounded-3xl border border-border/60 bg-card/95 ios-blur backdrop-blur-2xl shadow-2xl">
         <DialogHeader>
-          <DialogTitle className="font-display text-2xl">
+          <DialogTitle className="text-xl font-bold tracking-tight text-foreground">
             {t("export.title")}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-xs text-muted-foreground">
             {t("export.description")}
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-2">
-          <p className="text-xs font-medium text-muted-foreground">{t("export.platform")}</p>
+          <p className="text-xs font-semibold text-muted-foreground">{t("export.platform")}</p>
           <ToggleGroup
             type="single"
             variant="outline"
             aria-label={t("export.preset")}
-            className="w-full"
+            className="w-full rounded-2xl p-1 bg-black/[0.04] dark:bg-white/[0.08] border border-border/40"
             value={preset}
             disabled={busy}
             onValueChange={(value) => value && setPreset(value)}
@@ -284,13 +284,13 @@ export function ExportPanel({
               ["reels", "Reels"],
               ["shorts", "Shorts"],
             ].map(([id, label]) => (
-              <ToggleGroupItem key={id} value={id} className="flex-1">
+              <ToggleGroupItem key={id} value={id} className="flex-1 rounded-xl text-xs font-semibold data-[state=on]:bg-card data-[state=on]:text-foreground data-[state=on]:shadow-xs">
                 {label}
               </ToggleGroupItem>
             ))}
           </ToggleGroup>
         </div>
-        <dl className="grid grid-cols-2 gap-x-4 gap-y-3 rounded-lg border bg-muted/40 p-4 text-sm">
+        <dl className="grid grid-cols-2 gap-x-4 gap-y-3 rounded-2xl border border-border/40 bg-black/[0.02] dark:bg-white/[0.04] p-4 text-xs">
           {summary.map(([label, value]) => (
             <div key={label}>
               <dt className="text-xs text-muted-foreground">{label}</dt>
