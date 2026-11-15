@@ -54,10 +54,10 @@ export function SignUp() {
 
   return (
     <div className="w-full">
-      <h1 className="font-display text-3xl font-bold tracking-tight">{t("signUp.title")}</h1>
-      <p className="mt-2 text-sm text-muted-foreground">{t("signUp.subtitle")}</p>
-      <div className="mt-8">
-        <form onSubmit={handleSubmit} className="space-y-4">
+      <h1 className="text-2xl font-bold tracking-tight text-foreground">{t("signUp.title")}</h1>
+      <p className="mt-1.5 text-xs text-muted-foreground">{t("signUp.subtitle")}</p>
+      <div className="mt-6">
+        <form onSubmit={handleSubmit} className="space-y-3.5">
           <Input
             className="h-11"
             type="text"
@@ -86,14 +86,20 @@ export function SignUp() {
             disabled={loading}
             minLength={8}
           />
-          <Button type="submit" className="h-11 w-full" disabled={loading}>
+          <Button type="submit" className="w-full min-h-[44px] mt-2 font-semibold" disabled={loading}>
             {loading ? t("signUp.submitting") : t("signUp.submit")}
           </Button>
         </form>
         {message && (
-          <p className={`mt-4 text-sm ${ok ? "text-green-600" : "text-red-600"}`}>
+          <div
+            className={`mt-4 rounded-xl p-3 text-xs font-medium ${
+              ok
+                ? "bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/30"
+                : "bg-destructive/15 text-destructive border border-destructive/30"
+            }`}
+          >
             {message}
-          </p>
+          </div>
         )}
       </div>
     </div>

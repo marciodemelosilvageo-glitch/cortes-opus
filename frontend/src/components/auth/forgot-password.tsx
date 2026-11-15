@@ -33,15 +33,15 @@ export function ForgotPassword() {
 
   return (
     <div className="w-full">
-      <h1 className="font-display text-3xl font-bold tracking-tight">{t("forgot.title")}</h1>
-      <p className="mt-2 text-sm text-muted-foreground">{t("forgot.subtitle")}</p>
-      <div className="mt-8">
+      <h1 className="text-2xl font-bold tracking-tight text-foreground">{t("forgot.title")}</h1>
+      <p className="mt-1.5 text-xs text-muted-foreground">{t("forgot.subtitle")}</p>
+      <div className="mt-6">
         {sent ? (
-          <p className="text-sm text-green-600">
+          <div className="rounded-xl p-3.5 text-xs font-medium bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/30">
             {t("forgot.sent", { email })}
-          </p>
+          </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3.5">
             <Input
               className="h-11"
               type="email"
@@ -51,12 +51,16 @@ export function ForgotPassword() {
               required
               disabled={loading}
             />
-            <Button type="submit" className="h-11 w-full" disabled={loading}>
+            <Button type="submit" className="w-full min-h-[44px] mt-2 font-semibold" disabled={loading}>
               {loading ? t("forgot.submitting") : t("forgot.submit")}
             </Button>
           </form>
         )}
-        {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+        {error && (
+          <div className="mt-4 rounded-xl p-3 text-xs font-medium bg-destructive/15 text-destructive border border-destructive/30">
+            {error}
+          </div>
+        )}
       </div>
     </div>
   );
