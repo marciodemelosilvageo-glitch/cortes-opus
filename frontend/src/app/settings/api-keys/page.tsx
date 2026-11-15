@@ -184,10 +184,10 @@ export default function ApiKeysPage() {
     <main className="mx-auto w-full max-w-3xl px-4 py-8 sm:px-8 md:py-10">
         <div>
           <div className="mb-8">
-            <h1 className="font-display text-3xl font-bold tracking-tight">{t("apiKeys.title")}</h1>
-            <p className="mt-2 text-muted-foreground">
+            <h1 className="text-3xl font-bold tracking-tight text-foreground">{t("apiKeys.title")}</h1>
+            <p className="mt-1.5 text-xs text-muted-foreground">
               {t.rich("apiKeys.intro", {
-                brand: (chunks) => <span className="font-medium text-foreground">{chunks}</span>,
+                brand: (chunks) => <span className="font-semibold text-foreground">{chunks}</span>,
               })}
             </p>
           </div>
@@ -199,15 +199,15 @@ export default function ApiKeysPage() {
                 href={doc.href}
                 target="_blank"
                 rel="noreferrer"
-                className="group flex items-start gap-3 rounded-xl border bg-background p-4 transition-colors hover:border-foreground/25"
+                className="group flex items-start gap-3 rounded-2xl border border-border/60 bg-card p-4 transition-all hover:bg-black/[0.02] dark:hover:bg-white/[0.04] shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_16px_rgba(0,0,0,0.35)] active:scale-[0.98]"
               >
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted"><doc.icon className="size-4" /></span>
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20"><doc.icon className="size-4" /></span>
                 <span className="min-w-0 flex-1">
-                  <span className="flex items-center gap-1 text-sm font-semibold">
+                  <span className="flex items-center gap-1 text-xs font-semibold text-foreground">
                     {t(`apiKeys.docs.${doc.titleKey}`)}
-                    <ArrowUpRight className="size-3.5 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                    <ArrowUpRight className="size-3 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </span>
-                  <span className="mt-0.5 block text-xs text-muted-foreground">{t(`apiKeys.docs.${doc.descriptionKey}`)}</span>
+                  <span className="mt-0.5 block text-[11px] text-muted-foreground">{t(`apiKeys.docs.${doc.descriptionKey}`)}</span>
                 </span>
               </a>
             ))}
@@ -260,8 +260,8 @@ export default function ApiKeysPage() {
           )}
 
           {/* Create form */}
-          <div className="mb-10 p-4 border rounded-lg">
-            <Label htmlFor="key-name" className="mb-2 block">
+          <div className="mb-10 p-5 rounded-2xl border border-border/60 bg-card shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_16px_rgba(0,0,0,0.35)]">
+            <Label htmlFor="key-name" className="mb-2 block text-xs font-semibold text-foreground">
               {t("apiKeys.createLabel")}
             </Label>
             <div className="flex gap-2">
@@ -272,8 +272,9 @@ export default function ApiKeysPage() {
                 maxLength={120}
                 onChange={(e) => setName(e.target.value)}
                 disabled={isCreating || !emailVerified}
+                className="h-11 rounded-xl"
               />
-              <Button onClick={handleCreate} disabled={isCreating || !emailVerified}>
+              <Button onClick={handleCreate} disabled={isCreating || !emailVerified} className="rounded-full px-5 min-h-[44px] font-semibold">
                 <Plus className="w-4 h-4" />
                 {isCreating ? t("apiKeys.creating") : t("apiKeys.create")}
               </Button>
@@ -284,29 +285,29 @@ export default function ApiKeysPage() {
 
           {/* Key list */}
           <div>
-            <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-3">
+            <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
               {t("apiKeys.yourKeys")}
             </h2>
             {isFetching ? (
-              <Skeleton className="h-20 w-full" />
+              <Skeleton className="h-20 w-full rounded-2xl" />
             ) : keys.length === 0 ? (
-              <p className="text-muted-foreground text-sm">{t("apiKeys.empty")}</p>
+              <p className="text-muted-foreground text-xs">{t("apiKeys.empty")}</p>
             ) : (
               <div className="space-y-3">
                 {keys.map((key) => (
                   <div
                     key={key.id}
-                    className="flex items-center justify-between p-4 border rounded-lg"
+                    className="flex items-center justify-between p-4 rounded-2xl border border-border/60 bg-card shadow-xs"
                   >
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="font-medium text-foreground truncate">{key.name}</span>
+                        <span className="font-semibold text-xs text-foreground truncate">{key.name}</span>
                         {key.revoked && <Badge variant="secondary">{t("apiKeys.revoked")}</Badge>}
                       </div>
-                      <p className="text-xs text-muted-foreground font-mono mt-1">
+                      <p className="text-[11px] text-muted-foreground font-mono mt-0.5">
                         {key.key_prefix}…
                       </p>
-                      <p className="text-xs text-muted-foreground mt-1">
+                      <p className="text-[11px] text-muted-foreground mt-0.5">
                         {t("apiKeys.meta", { created: formatDate(key.created_at), used: formatDate(key.last_used_at) })}
                       </p>
                     </div>
@@ -314,10 +315,10 @@ export default function ApiKeysPage() {
                       <Button
                         size="sm"
                         variant="ghost"
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/50 dark:hover:text-red-300"
+                        className="rounded-full text-destructive hover:bg-destructive/10"
                         onClick={() => handleRevoke(key.id)}
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-3.5 h-3.5" />
                         {t("apiKeys.revoke")}
                       </Button>
                     )}

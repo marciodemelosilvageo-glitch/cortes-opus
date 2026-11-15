@@ -173,8 +173,8 @@ function SocialSettingsContent() {
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 sm:px-8 md:py-10">
       <div className="mb-8">
-        <h1 className="font-display text-3xl font-bold tracking-tight">{t("page.title")}</h1>
-        <p className="mt-2 text-muted-foreground">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">{t("page.title")}</h1>
+        <p className="mt-1.5 text-xs text-muted-foreground">
           {t("page.intro")}
         </p>
       </div>
@@ -284,7 +284,7 @@ function SocialSettingsContent() {
             {connections.map((connection) => (
               <div
                 key={connection.id}
-                className="flex items-center justify-between gap-4 rounded-xl border bg-background p-4"
+                className="flex items-center justify-between gap-4 rounded-2xl border border-border/60 bg-card p-4 shadow-xs"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <Avatar className="h-9 w-9">

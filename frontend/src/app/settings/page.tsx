@@ -324,8 +324,8 @@ export default function SettingsPage() {
 
   return (
     <main className={cn("mx-auto w-full max-w-3xl px-4 pt-8 sm:px-8 md:pt-10", showSaveBar ? "pb-32" : "pb-16")}>
-      <h1 className="font-display text-3xl font-bold tracking-tight">{t("title")}</h1>
-      <p className="mt-1 text-sm text-muted-foreground">{t("intro")}</p>
+      <h1 className="text-3xl font-bold tracking-tight text-foreground">{t("title")}</h1>
+      <p className="mt-1 text-xs text-muted-foreground">{t("intro")}</p>
 
       <div className="mt-8 space-y-6">
         <Section icon={<Languages className="size-4" />} title={tLang("label")} description={t("languageDescription")}>
@@ -580,21 +580,21 @@ export default function SettingsPage() {
           </Section>
         )}
 
-        <Link href="/settings/api-keys" className="group flex items-center gap-4 rounded-2xl border bg-background p-5 transition-colors hover:border-foreground/25">
-          <span className="flex size-9 items-center justify-center rounded-lg bg-muted"><Bot className="size-4" /></span>
+        <Link href="/settings/api-keys" className="group flex items-center gap-3.5 rounded-2xl border border-border/60 bg-card p-4 transition-all hover:bg-black/[0.02] dark:hover:bg-white/[0.04] shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_16px_rgba(0,0,0,0.35)] active:scale-[0.98]">
+          <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20"><Bot className="size-4" /></span>
           <span className="min-w-0 flex-1">
-            <span className="block text-sm font-semibold">{t("links.agentsTitle")}</span>
-            <span className="block text-xs text-muted-foreground">{t("links.agentsDescription")}</span>
+            <span className="block text-xs font-semibold text-foreground">{t("links.agentsTitle")}</span>
+            <span className="block text-[11px] text-muted-foreground">{t("links.agentsDescription")}</span>
           </span>
           <ChevronRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
         </Link>
 
         {socialAccess === true && (
-          <Link href="/settings/social" className="group flex items-center gap-4 rounded-2xl border bg-background p-5 transition-colors hover:border-foreground/25">
-            <span className="flex size-9 items-center justify-center rounded-lg bg-muted"><Share2 className="size-4" /></span>
+          <Link href="/settings/social" className="group flex items-center gap-3.5 rounded-2xl border border-border/60 bg-card p-4 transition-all hover:bg-black/[0.02] dark:hover:bg-white/[0.04] shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_16px_rgba(0,0,0,0.35)] active:scale-[0.98]">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20"><Share2 className="size-4" /></span>
             <span className="min-w-0 flex-1">
-              <span className="block text-sm font-semibold">{t("links.socialTitle")}</span>
-              <span className="block text-xs text-muted-foreground">{t("links.socialDescription")}</span>
+              <span className="block text-xs font-semibold text-foreground">{t("links.socialTitle")}</span>
+              <span className="block text-[11px] text-muted-foreground">{t("links.socialDescription")}</span>
             </span>
             <ChevronRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
           </Link>
@@ -632,13 +632,13 @@ export default function SettingsPage() {
 
       {showSaveBar && (
         <div className="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-30 flex justify-center px-4 pb-4 pointer-events-none md:bottom-0 md:pb-6 md:pl-64">
-          <div className="pointer-events-auto flex w-full max-w-3xl animate-in fade-in slide-in-from-bottom-4 duration-200 items-center justify-between gap-4 rounded-2xl border bg-background/95 px-4 py-3 shadow-lg backdrop-blur max-md:mr-14">
-            <p role="status" className="flex items-center gap-2 text-sm text-muted-foreground">
-              {success ? <><Check className="size-4 text-emerald-600" />{t("save.saved")}</>
-                : <><span className="size-2 rounded-full bg-brand" />{t("save.unsaved")}</>}
+          <div className="pointer-events-auto flex w-full max-w-3xl animate-in fade-in slide-in-from-bottom-4 duration-200 items-center justify-between gap-4 rounded-full border border-border/60 bg-card/90 ios-blur backdrop-blur-2xl px-5 py-2.5 shadow-2xl max-md:mr-14">
+            <p role="status" className="flex items-center gap-2 text-xs text-muted-foreground font-medium">
+              {success ? <><Check className="size-4 text-[#34C759]" />{t("save.saved")}</>
+                : <><span className="size-2 rounded-full bg-primary animate-pulse" />{t("save.unsaved")}</>}
             </p>
-            <Button onClick={handleSavePreferences} disabled={isLoading}>
-              {isLoading ? <><Loader2 className="size-4 animate-spin" />{t("save.saving")}</> : t("save.button")}
+            <Button onClick={handleSavePreferences} disabled={isLoading} className="rounded-full min-h-[38px] px-5 text-xs font-semibold">
+              {isLoading ? <><Loader2 className="size-3.5 animate-spin" />{t("save.saving")}</> : t("save.button")}
             </Button>
           </div>
         </div>
@@ -649,11 +649,11 @@ export default function SettingsPage() {
 
 function Section({ id, icon, title, description, children }: { id?: string; icon: React.ReactNode; title: string; description: string; children: React.ReactNode }) {
   return (
-    <section id={id} className="scroll-mt-6 rounded-2xl border bg-background">
-      <div className="flex items-start gap-3 border-b px-5 py-4">
-        <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted">{icon}</span>
+    <section id={id} className="scroll-mt-6 rounded-2xl border border-border/60 bg-card shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_16px_rgba(0,0,0,0.35)] overflow-hidden">
+      <div className="flex items-start gap-3.5 border-b border-border/40 px-5 py-4 bg-black/[0.01] dark:bg-white/[0.02]">
+        <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20">{icon}</span>
         <div>
-          <h2 className="text-sm font-semibold">{title}</h2>
+          <h2 className="text-sm font-semibold text-foreground tracking-tight">{title}</h2>
           <p className="text-xs text-muted-foreground">{description}</p>
         </div>
       </div>
