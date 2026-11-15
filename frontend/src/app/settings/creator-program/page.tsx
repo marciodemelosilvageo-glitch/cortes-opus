@@ -75,15 +75,6 @@ export default function CreatorProgramPage() {
   const t = useTranslations("settings");
   const { data: session, isPending } = useSession();
 
-  useEffect(() => {
-    if (!monetizationEnabled) {
-      router.replace("/settings");
-    }
-  }, [router]);
-
-  if (!monetizationEnabled) {
-    return null;
-  }
   const [application, setApplication] = useState<Application | null>(null);
   const [canApplyAt, setCanApplyAt] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -100,7 +91,13 @@ export default function CreatorProgramPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!session?.user?.id) return;
+    if (!monetizationEnabled) {
+      router.replace("/settings");
+    }
+  }, [router]);
+
+  useEffect(() => {
+    if (!monetizationEnabled || !session?.user?.id) return;
     fetch("/api/affiliates", { cache: "no-store" })
       .then(async (response) => {
         if (!response.ok) throw new Error(t("creator.loadFailed"));
@@ -113,6 +110,7 @@ export default function CreatorProgramPage() {
   }, [session?.user?.id, t]);
 
   useEffect(() => {
+    if (!monetizationEnabled) return;
     const value = slug.trim();
     if (!value) {
       setSlugState({ state: "idle" });
@@ -134,6 +132,10 @@ export default function CreatorProgramPage() {
       controller.abort();
     };
   }, [slug, t]);
+
+  if (!monetizationEnabled) {
+    return null;
+  }
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
