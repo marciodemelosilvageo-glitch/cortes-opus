@@ -624,18 +624,28 @@ def format_transcript_for_analysis(transcript) -> List[str]:
     Handles both AssemblyAI transcript objects (utterances/words with ms
     timings) and Whisper result dicts (segments with second-based timings).
     """
-    # Whisper result dict: treat each segment as an utterance, converting the
-    # second-based timings to milliseconds to match the timestamp formatter.
+    # Whisper result dict or cached transcript dict
     if isinstance(transcript, dict):
-        formatted_lines = []
-        for segment in transcript.get("segments") or []:
-            start_ms = int(segment.get("start", 0) * 1000)
-            end_ms = int(segment.get("end", 0) * 1000)
-            formatted_lines.append(
-                f"[{format_ms_to_timestamp(start_ms)} - {format_ms_to_timestamp(end_ms)}] "
-                f"{segment.get('text', '').strip()}"
-            )
-        return formatted_lines
+        if transcript.get("segments"):
+            formatted_lines = []
+            for segment in transcript.get("segments") or []:
+                start_ms = int(segment.get("start", 0) * 1000)
+                end_ms = int(segment.get("end", 0) * 1000)
+                formatted_lines.append(
+                    f"[{format_ms_to_timestamp(start_ms)} - {format_ms_to_timestamp(end_ms)}] "
+                    f"{segment.get('text', '').strip()}"
+                )
+            return formatted_lines
+        elif transcript.get("utterances"):
+            formatted_lines = []
+            for utterance in transcript.get("utterances") or []:
+                start_ms = int(utterance.get("start", 0))
+                end_ms = int(utterance.get("end", 0))
+                formatted_lines.append(
+                    f"[{format_ms_to_timestamp(start_ms)} - {format_ms_to_timestamp(end_ms)}] "
+                    f"{utterance.get('text', '').strip()}"
+                )
+            return formatted_lines
 
     utterances = getattr(transcript, "utterances", None) or []
     if utterances:

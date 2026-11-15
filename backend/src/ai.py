@@ -501,7 +501,7 @@ def _get_missing_llm_key_error(model_name: str, runtime_config: Config) -> Optio
 
 def _uses_native_output(model_name: str) -> bool:
     provider, name = _split_llm_name(model_name)
-    return provider == "openrouter" or (
+    return provider in {"openrouter", "ollama"} or (
         provider == "anthropic" and name == "claude-sonnet-5-5"
     )
 
