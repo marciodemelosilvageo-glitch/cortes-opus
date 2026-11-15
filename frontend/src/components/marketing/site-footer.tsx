@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 
 import { catalogKey } from "@/i18n/config";
 import { getMarketingLink, getMarketingLinks } from "@/lib/marketing-links";
+import { monetizationEnabled } from "@/lib/monetization";
 import { APP_STORE_URL, COMPANY_NAME, GITHUB_URL } from "@/lib/site";
 
 const linkClassName = "hover:text-foreground transition-colors";
@@ -30,9 +31,8 @@ export function SiteFooter() {
       hrefs: [
         ...getMarketingLinks("product").map((link) => link.href),
         "/sign-up",
-        "/#pricing",
+        ...(monetizationEnabled ? ["/#pricing", "/affiliate"] : []),
         "/faq",
-        "/affiliate",
         "/changelog",
         "/status",
         "/privacy",

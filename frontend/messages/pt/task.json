@@ -124,9 +124,9 @@
   "openInEditor": "Abrir no editor",
   "steps": {
     "fetching": "Buscando vídeo",
-    "transcribing": "Transcrevendo",
-    "finding": "Encontrando momentos",
-    "rendering": "Renderizando clipes"
+    "transcribing": "Transcrevendo áudio",
+    "finding": "Selecionando melhores ganchos",
+    "rendering": "Gerando clipes verticais"
   },
   "eta": {
     "queued": "Aguardando um worker",

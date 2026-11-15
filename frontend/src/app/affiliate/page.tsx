@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { ArrowRight, Gift, Link2, Percent, Search, Send } from "lucide-react";
 
@@ -8,6 +9,7 @@ import { SiteFooter } from "@/components/marketing/site-footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getPublicBillingPlans } from "@/lib/billing-plans";
+import { monetizationEnabled } from "@/lib/monetization";
 import { getSiteUrl } from "@/lib/site";
 
 const APPLY_HREF = "/settings/creator-program";
@@ -41,6 +43,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AffiliatePage() {
+  if (!monetizationEnabled) {
+    notFound();
+  }
+
   const t = await getTranslations("affiliate");
   const siteUrl = getSiteUrl();
   const pro = getPublicBillingPlans().find((plan) => plan.id === "pro");

@@ -552,7 +552,7 @@ class VideoService:
         async def report(percent: int, message: str) -> None:
             async with progress_lock:
                 if should_cancel and await should_cancel():
-                    raise Exception("Task cancelled")
+                    raise Exception("Tarefa cancelada")
                 if progress_callback:
                     await progress_callback(percent, message, "processing")
 
@@ -1162,7 +1162,7 @@ class VideoService:
 
         if progress_callback:
             await progress_callback(
-                50, "Analyzing content with AI...", "processing"
+                50, "Analisando conteúdo com IA...", "processing"
             )
 
         relevant_parts = None
@@ -1377,7 +1377,7 @@ class VideoService:
                 raise Exception("Task cancelled")
 
             if progress_callback:
-                await progress_callback(10, "Downloading video...", "processing")
+                await progress_callback(10, "Baixando vídeo...", "processing")
 
             if source_type == "youtube":
                 job_budget = ByteBudget(
@@ -1504,18 +1504,18 @@ class VideoService:
             # Uploads only. YouTube and streams already downloaded above.
             if source_type not in {"youtube", "twitch", "kick"} and await upload_needs_remote_copy(url):
                 if progress_callback:
-                    await progress_callback(12, "Storing upload...", "processing")
+                    await progress_callback(12, "Armazenando envio...", "processing")
                 await persist_local_upload(url)
             if progress_callback:
-                await progress_callback(15, "Preparing video...", "processing")
+                await progress_callback(15, "Preparando vídeo...", "processing")
             video_path = await VideoService.prepare_source(video_path)
 
             # Step 2: Generate transcript
             if should_cancel and await should_cancel():
-                raise Exception("Task cancelled")
+                raise Exception("Tarefa cancelada")
 
             if progress_callback:
-                await progress_callback(30, "Generating transcript...", "processing")
+                await progress_callback(30, "Gerando transcrição...", "processing")
 
             transcript = checkpoint.get("transcript") or cached_transcript
             transcript_data = checkpoint.get("transcript_data")
@@ -1588,9 +1588,9 @@ class VideoService:
                 )
             else:
                 if should_cancel and await should_cancel():
-                    raise Exception("Task cancelled")
+                    raise Exception("Tarefa cancelada")
                 if progress_callback:
-                    await progress_callback(50, "Reading the whole video...", "processing")
+                    await progress_callback(50, "Lendo o vídeo completo...", "processing")
                 # Planners cut on these word timings, so they are read before planning.
                 transcript_data = await run_in_thread(load_cached_transcript_data, video_path)
                 source_seconds = float(file_duration or 0.0)
@@ -1636,7 +1636,7 @@ class VideoService:
                 audio_path = video_path
                 if progress_callback:
                     await progress_callback(
-                        65, "Downloading selected segments...", "processing"
+                        65, "Baixando trechos selecionados...", "processing"
                     )
                 section_error = None
                 try:

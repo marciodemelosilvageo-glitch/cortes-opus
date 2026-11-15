@@ -26,10 +26,9 @@ class Config:
         self.transcription_provider = self._normalize_transcription_provider(
             os.getenv("TRANSCRIPTION_PROVIDER", "assemblyai")
         )
-        # Empty means auto-detect the spoken language; otherwise an AssemblyAI
-        # language code such as "es" or "en_us" forces it.
+        # Empty means auto-detect the spoken language; defaults to "pt" for Brazilian Portuguese.
         self.transcription_language = self._normalize_transcription_language(
-            os.getenv("TRANSCRIPTION_LANGUAGE")
+            os.getenv("TRANSCRIPTION_LANGUAGE", "pt")
         )
         self.llm = self._get_runtime_setting("LLM") or self._infer_default_llm()
         # Optional separate model for the cross-window candidate rerank pass.

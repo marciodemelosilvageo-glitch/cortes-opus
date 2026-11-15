@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { AlertCircle, Check, Copy, Loader2 } from "lucide-react";
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -16,6 +17,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { useSession } from "@/lib/auth-client";
 import { useCopyText } from "@/lib/copy-text";
+import { monetizationEnabled } from "@/lib/monetization";
 import { appStoreRedeemUrl } from "@/lib/site";
 
 const APPLY_PATH = "/settings/creator-program";
@@ -69,8 +71,19 @@ function CopyField({ label, value, copyLabel }: { label: string; value: string; 
 }
 
 export default function CreatorProgramPage() {
+  const router = useRouter();
   const t = useTranslations("settings");
   const { data: session, isPending } = useSession();
+
+  useEffect(() => {
+    if (!monetizationEnabled) {
+      router.replace("/settings");
+    }
+  }, [router]);
+
+  if (!monetizationEnabled) {
+    return null;
+  }
   const [application, setApplication] = useState<Application | null>(null);
   const [canApplyAt, setCanApplyAt] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);

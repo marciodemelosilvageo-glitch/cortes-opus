@@ -149,7 +149,7 @@ export function formatMetric(value: number | null | undefined): string {
   if (value === null || value === undefined || Number.isNaN(value)) return "—";
   if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
   if (value >= 10_000) return `${(value / 1_000).toFixed(1)}k`;
-  return Math.round(value).toLocaleString();
+  return Math.round(value).toLocaleString("pt-BR");
 }
 
 export function formatPercent(value: number | null | undefined): string {
@@ -161,7 +161,7 @@ export function formatDateTime(value: string | null | undefined): string {
   if (!value) return "—";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "—";
-  return date.toLocaleString();
+  return date.toLocaleString("pt-BR");
 }
 
 export function parseHashtagInput(value: string): string[] {

@@ -325,20 +325,20 @@ function activeStep(status: string, progress: number, message: string) {
   const text = message.toLowerCase();
   // Workflow planning ("Mapping the story...", "Finding where '<topic>' comes up..."), checked
   // first: the quoted topic is the user's own words and may say anything.
-  if (/^(reading|mapping|planning|picking|choosing|writing|checking|finding where)\b/.test(text)) return 2;
-  if (/render|creating (clip|part|recap|trailer)|clip \d|saving/.test(text)) return 3;
-  if (/analy|moment|segment|ai /.test(text)) return 2;
+  if (/^(reading|mapping|planning|picking|choosing|writing|checking|finding where|lendo|mapeando|planejando|escolhendo|escrevendo|verificando)\b/.test(text)) return 2;
+  if (/render|creating (clip|part|recap|trailer)|criando (clipe|parte|recap|trailer)|clip \d|clipe \d|saving|salvando/.test(text)) return 3;
+  if (/analy|moment|segment|ai |analis|ia /.test(text)) return 2;
   if (/transcri/.test(text)) return 1;
-  if (/download|fetch|preparing/.test(text)) return 0;
+  if (/download|fetch|preparing|baix|prepar/.test(text)) return 0;
   const byProgress = STEPS.findIndex((step) => progress < step.until);
   return byProgress === -1 ? STEPS.length - 1 : byProgress;
 }
 
-/** "Creating clip 3/5..." or "Creating part 2/4..." → { current, total } */
+/** "Creating clip 3/5..." or "Criando clipe 3/5..." → { current, total } */
 export function clipProgressFromMessage(message: string) {
   // A topic search message quotes the user's topic, which could look like a counter.
   if (/^finding where/i.test(message)) return null;
-  const match = /(?:clip|part|recap|trailer) (\d+)\s*\/\s*(\d+)/i.exec(message);
+  const match = /(?:clip|clipe|part|parte|recap|trailer) (\d+)\s*\/\s*(\d+)/i.exec(message);
   return match ? { current: Number(match[1]), total: Number(match[2]) } : null;
 }
 

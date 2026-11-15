@@ -170,7 +170,7 @@
     "declinedTitle": "Não conseguimos aprovar sua candidatura desta vez",
     "applyAgain": "Você pode se candidatar de novo em {date}.",
     "codeLabel": "Seu código",
-    "codePlaceholder": "maya",
+    "codePlaceholder": "seu_codigo",
     "checking": "Verificando…",
     "available": "Disponível. Seu link será {origin}/?ref={slug} e seu código {code}.",
     "notAvailable": "Indisponível",
@@ -193,7 +193,7 @@
       "from100k": "100.000+"
     },
     "profileLabel": "Link do perfil",
-    "profilePlaceholder": "https://www.tiktok.com/@you",
+    "profilePlaceholder": "https://www.tiktok.com/@seuperfil",
     "videoLabel": "Um vídeo que você fez sobre o SupoClip",
     "optional": "(opcional)",
     "videoPlaceholder": "https://",

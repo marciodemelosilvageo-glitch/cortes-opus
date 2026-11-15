@@ -32,10 +32,10 @@ export function CreatorGuideArticle({ guide }: { guide: CreatorGuide }) {
           {gallery?.afterSection === section.id ? <ArticleClipExamples gallery={gallery} /> : null}
           {section.example === "editor" ? (
             <figure className="not-prose space-y-3">
-              <a href="/blog/supoclip-editor.webp" aria-label="Open the full-size SupoClip editor screenshot">
-                <Image src="/blog/supoclip-editor.webp" alt="SupoClip caption editor showing style controls, a word-level transcript, and safe-area preview" width={1800} height={1109} sizes="(max-width: 768px) 100vw, 768px" className="h-auto w-full rounded-xl border" />
+              <a href="/blog/supoclip-editor.webp" aria-label="Abrir captura de tela em tamanho real do editor SupoClip">
+                <Image src="/blog/supoclip-editor.webp" alt="Editor de legendas do SupoClip com controles de estilo, transcrição palavra por palavra e pré-visualização de área segura" width={1800} height={1109} sizes="(max-width: 768px) 100vw, 768px" className="h-auto w-full rounded-xl border" />
               </a>
-              <figcaption className="text-sm leading-6 text-muted-foreground">Editor screenshot using a sample video. The caption controls and transcript sit beside the preview; open the image to inspect them at full size.</figcaption>
+              <figcaption className="text-sm leading-6 text-muted-foreground">Captura de tela do editor com um vídeo de exemplo. Os controles de legenda e a transcrição ficam ao lado da pré-visualização; abra a imagem para vê-la em tamanho real.</figcaption>
             </figure>
           ) : null}
           {section.links ? <p className="flex flex-wrap gap-x-5 gap-y-2 text-sm">{section.links.map((link) => <Link key={link.href} href={link.href}>{link.label}</Link>)}</p> : null}

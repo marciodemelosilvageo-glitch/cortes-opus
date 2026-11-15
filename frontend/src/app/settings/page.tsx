@@ -31,6 +31,7 @@ import { BillingIntervalToggle, ComingSoonTag, UpgradeNudge, getUpgradeState, us
 import type { BillingSummary } from "@/hooks/use-billing-summary";
 import { startUpgrade } from "@/lib/start-upgrade";
 import { CreatorCodeField } from "@/components/billing/creator-code-field";
+import { monetizationEnabled } from "@/lib/monetization";
 import { toast } from "sonner";
 import { track } from "@/lib/datafast";
 import Link from "next/link";
@@ -414,7 +415,7 @@ export default function SettingsPage() {
           </div>
         </Section>
 
-        {billingSummary?.monetization_enabled && (
+        {monetizationEnabled && billingSummary?.monetization_enabled && (
           <Section id="plan" icon={<CreditCard className="size-4" />} title={t("plan.title")} description={paymentNeedsUpdate || isPaidBillingPlan(billingSummary.plan) ? t("plan.paidDescription") : t("plan.freeDescription")}>
             <div className="space-y-4">
               <div className="rounded-xl bg-muted/50 p-4">
@@ -599,14 +600,16 @@ export default function SettingsPage() {
           </Link>
         )}
 
-        <Link href="/settings/creator-program" className="group flex items-center gap-4 rounded-2xl border bg-background p-5 transition-colors hover:border-foreground/25">
-          <span className="flex size-9 items-center justify-center rounded-lg bg-muted"><Megaphone className="size-4" /></span>
-          <span className="min-w-0 flex-1">
-            <span className="block text-sm font-semibold">{t("links.creatorTitle")}</span>
-            <span className="block text-xs text-muted-foreground">{t("links.creatorDescription")}</span>
-          </span>
-          <ChevronRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-        </Link>
+        {monetizationEnabled && (
+          <Link href="/settings/creator-program" className="group flex items-center gap-4 rounded-2xl border bg-background p-5 transition-colors hover:border-foreground/25">
+            <span className="flex size-9 items-center justify-center rounded-lg bg-muted"><Megaphone className="size-4" /></span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-sm font-semibold">{t("links.creatorTitle")}</span>
+              <span className="block text-xs text-muted-foreground">{t("links.creatorDescription")}</span>
+            </span>
+            <ChevronRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        )}
 
         <DeleteAccountSection
           email={session.user.email}

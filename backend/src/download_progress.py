@@ -9,11 +9,11 @@ from .utils.async_helpers import run_in_thread
 
 
 class DownloadRecovery(str, Enum):
-    CONNECTION = "Retrying video download with another connection..."
-    AUDIO = "Recovering video audio..."
-    FULL_VIDEO = "Recovering the full video download..."
-    BACKUP = "Using a backup video download option..."
-    ANOTHER_BACKUP = "Trying another video download recovery option..."
+    CONNECTION = "Tentando baixar o vídeo com outra conexão..."
+    AUDIO = "Recuperando áudio do vídeo..."
+    FULL_VIDEO = "Recuperando o download completo do vídeo..."
+    BACKUP = "Usando opção alternativa de download de vídeo..."
+    ANOTHER_BACKUP = "Tentando outra opção de recuperação de download..."
 
 
 _listener: ContextVar[Optional[Callable[[DownloadRecovery], None]]] = ContextVar(

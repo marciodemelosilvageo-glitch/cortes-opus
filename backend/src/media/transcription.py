@@ -187,22 +187,22 @@ def _get_whisper_model(model_name: str = "base"):
 
 
 def transcribe_with_whisper(
-    video_path: Path, model_name: str = "base", language: Optional[str] = None
+    video_path: Path, model_name: str = "base", language: Optional[str] = "pt"
 ) -> Dict[str, Any]:
     """Transcribe video using local Whisper with word-level timestamps.
 
     ``language`` None lets Whisper detect it; AssemblyAI-style codes such as
-    ``en_us`` are reduced to the ISO 639-1 base Whisper expects.
+    ``en_us`` are reduced to the ISO 639-1 base Whisper expects. Default is 'pt'.
     """
     audio_path = _prepare_audio_for_transcription(video_path)
     model = _get_whisper_model(model_name)
-    whisper_language = language.split("_", 1)[0] if language else None
+    whisper_language = language.split("_", 1)[0] if language else "pt"
     logger.info(
         "Starting Whisper transcription with model: %s (language: %s)",
         model_name,
-        whisper_language or "auto",
+        whisper_language or "pt",
     )
-    return model.transcribe(str(audio_path), word_timestamps=True, language=whisper_language)
+    return model.transcribe(str(audio_path), word_timestamps=True, language=whisper_language or "pt")
 
 
 def _whisper_result_to_transcript_data(whisper_result: Dict[str, Any]) -> Dict[str, Any]:
@@ -419,7 +419,7 @@ def _get_transcript_with_whisper(video_path: Path, runtime_config) -> str:
     model_name = runtime_config.whisper_model
     logger.info("Starting Whisper transcription with model: %s", model_name)
     whisper_result = transcribe_with_whisper(
-        video_path, model_name, runtime_config.transcription_language or None
+        video_path, model_name, runtime_config.transcription_language or "pt"
     )
 
     formatted_lines = format_transcript_for_analysis(whisper_result)

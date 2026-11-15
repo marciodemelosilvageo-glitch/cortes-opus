@@ -7,14 +7,14 @@
   "cancel": "Cancelar",
   "savingDots": "Salvando...",
   "gate": {
-    "title": "Admin",
+    "title": "Administração",
     "signIn": "Você precisa entrar para ver esta página.",
     "goToSignIn": "Ir para entrar",
     "notAdmin": "Você entrou, mas sua conta não é de administrador."
   },
   "stats": {
     "users": "Total de usuários",
-    "admins": "Admins",
+    "admins": "Administradores",
     "tasks": "Total de tarefas",
     "completed": "Tarefas concluídas",
     "processing": "Em processamento agora"
@@ -146,7 +146,7 @@
   "flags": {
     "title": "Feature flags",
     "description": "Ative recursos por plataforma sem deploy. As mudanças chegam à API em cerca de 15 segundos.",
-    "flag": "Flag",
+    "flag": "Sinalização",
     "web": "Web",
     "ios": "iOS",
     "adminsBypass": "Admins sempre",

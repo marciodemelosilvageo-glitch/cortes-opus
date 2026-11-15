@@ -115,12 +115,12 @@ function AnnouncementMedia({ media, variantsUrl }: { media: Media; /** Previews 
       </video>
       {variants.length > 0 && (
         <select
-          aria-label="Render"
+          aria-label="Renderização"
           value={chosen ?? ""}
           onChange={(event) => setChosen(event.target.value || null)}
           className="absolute right-3 top-3 h-8 max-w-[60%] rounded-full border border-white/20 bg-black/55 px-3 text-xs text-white backdrop-blur"
         >
-          <option value="">Current</option>
+          <option value="">Atual</option>
           {variants.map((variant, index) => <option key={variant.slug} value={variant.slug}>{index + 1}. {variant.name}</option>)}
         </select>
       )}

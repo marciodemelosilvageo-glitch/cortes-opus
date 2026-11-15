@@ -19,6 +19,7 @@ import {
 
 import { Announcements } from "@/components/announcements";
 import { BillingIntervalToggle, ComingSoonTag, useBillingPlanText } from "@/components/billing/upgrade-prompt";
+import { monetizationEnabled } from "@/lib/monetization";
 import { FaqSection } from "@/components/landing/faq-section";
 import { EditorSection } from "@/components/landing/editor-section";
 import { FeatureBento } from "@/components/landing/feature-bento";
@@ -60,12 +61,12 @@ const NAV_LINKS = [
   { href: "#features", key: "features" },
   { href: "#editor", key: "editor" },
   { href: "#publish", key: "publishing" },
-  { href: "#pricing", key: "pricing" },
+  ...(monetizationEnabled ? [{ href: "#pricing", key: "pricing" } as const] : []),
   { href: "#open-source", key: "openSource" },
   { href: "/faq", key: "faq" },
   { href: "/blog", key: "blog" },
-  { href: "/affiliate", key: "affiliate" },
-] as const;
+  ...(monetizationEnabled ? [{ href: "/affiliate", key: "affiliate" } as const] : []),
+];
 
 // Featured on the landing page; the footer links every marketing page.
 const SEO_RESOURCES = [
@@ -388,6 +389,7 @@ export default function LandingPage() {
       <PublishSection />
 
       {/* ─── PRICING ─── */}
+      {monetizationEnabled && (
       <section id="pricing" className="scroll-mt-24 py-24 md:py-32">
         <div className="mx-auto max-w-6xl px-6">
           <SectionHeading
@@ -534,6 +536,7 @@ export default function LandingPage() {
           </Reveal>
         </div>
       </section>
+      )}
 
       <FaqSection />
 

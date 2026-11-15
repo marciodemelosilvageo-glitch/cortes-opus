@@ -13,17 +13,17 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
   }, [error]);
 
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body className="antialiased">
         <div role="alert" className="mx-auto max-w-xl space-y-4 px-4 py-12 text-center">
-          <h1 className="text-2xl font-semibold">Something went wrong</h1>
-          <p className="text-muted-foreground">We couldn&apos;t load SupoClip. Please try again.</p>
+          <h1 className="text-2xl font-semibold">Algo deu errado</h1>
+          <p className="text-muted-foreground">Não foi possível carregar o SupoClip. Tente novamente.</p>
           <button
             type="button"
             onClick={reset}
             className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-muted"
           >
-            Try again
+            Tentar novamente
           </button>
         </div>
       </body>

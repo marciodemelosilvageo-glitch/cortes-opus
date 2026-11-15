@@ -51,7 +51,7 @@
   "framing": "Enquadramento",
   "framingOptions": {
     "vertical": {
-      "label": "Auto 9:16",
+      "label": "Automático 9:16",
       "hint": "Adapta-se aos sujeitos e ao contexto"
     },
     "vertical_fit": {

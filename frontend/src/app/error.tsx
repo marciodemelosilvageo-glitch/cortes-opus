@@ -11,5 +11,5 @@ export default function ErrorPage({ error, reset }: { error: Error & { digest?: 
     if (isPostHogEnabled) posthog.captureException(error);
   }, [error]);
 
-  return <PageError message="We couldn't load this page. Please try again." retry={reset} />;
+  return <PageError message="Não foi possível carregar esta página. Tente novamente." retry={reset} />;
 }

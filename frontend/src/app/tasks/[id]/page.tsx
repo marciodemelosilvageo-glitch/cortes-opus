@@ -41,6 +41,7 @@ import { ApiRequestError, formatSupportMessage, parseApiError } from "@/lib/api-
 import { useCopyText } from "@/lib/copy-text";
 import { useBillingSummary } from "@/hooks/use-billing-summary";
 import { UpgradeDialog, upgradeReasonForError, type UpgradeReason } from "@/components/billing/upgrade-prompt";
+import { monetizationEnabled } from "@/lib/monetization";
 import { buildFontOptionsPayload, FONT_TEMPLATE_DEFAULT_VALUE } from "@/lib/font-options";
 import {
   AlertCircle,
@@ -688,10 +689,14 @@ export default function TaskPage() {
       try {
         await requestAction(`${taskApiUrl}/${task.id}/resume`, "POST");
       } catch (err) {
-        const reason = err instanceof ApiRequestError ? upgradeReasonForError(err.code, err.detail, undefined) : null;
-        if (!reason) throw err;
-        setUpgradeReason(reason);
-        return;
+        if (monetizationEnabled) {
+          const reason = err instanceof ApiRequestError ? upgradeReasonForError(err.code, err.detail, undefined) : null;
+          if (reason) {
+            setUpgradeReason(reason);
+            return;
+          }
+        }
+        throw err;
       }
       // Finished clips stay and the worker renders only what's missing.
       await fetchTaskStatus();
@@ -710,10 +715,12 @@ export default function TaskPage() {
       });
       if (!response.ok) {
         const info = await parseApiError(response, t("errors.createTask"));
-        const reason = upgradeReasonForError(info.code, info.detail, undefined);
-        if (reason) {
-          setUpgradeReason(reason);
-          return;
+        if (monetizationEnabled) {
+          const reason = upgradeReasonForError(info.code, info.detail, undefined);
+          if (reason) {
+            setUpgradeReason(reason);
+            return;
+          }
         }
         throw new Error(formatSupportMessage(info));
       }
@@ -1344,13 +1351,15 @@ export default function TaskPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      <UpgradeDialog
-        open={upgradeReason !== null}
-        onOpenChange={(open) => { if (!open) setUpgradeReason(null); }}
-        reason={upgradeReason ?? { kind: "limit" }}
-        billing={billingSummary}
-        source="task_resume"
-      />
+      {monetizationEnabled && (
+        <UpgradeDialog
+          open={upgradeReason !== null}
+          onOpenChange={(open) => { if (!open) setUpgradeReason(null); }}
+          reason={upgradeReason ?? { kind: "limit" }}
+          billing={billingSummary}
+          source="task_resume"
+        />
+      )}
     </main>
   );
 }

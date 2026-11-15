@@ -8,83 +8,76 @@ export function TikTokPublishingArticle({ post }: { post: BlogPost }) {
   return (
     <ArticleShell
       post={post}
-      breadcrumb="TikTok publishing"
-      toc={[["whats-live", "What’s live"], ["first-post", "Your first post"], ["both-platforms", "TikTok + YouTube"], ["scheduling", "Scheduling"], ["faq", "FAQ"]]}
+      breadcrumb="Publicação no TikTok"
+      toc={[["whats-live", "O que há de novo"], ["first-post", "Seu primeiro post"], ["both-platforms", "TikTok + YouTube"], ["scheduling", "Agendamento"], ["faq", "Perguntas frequentes"]]}
       faqs={[
-        { question: "I already connected YouTube. Do I need to change anything?", answer: "Keep your existing YouTube connection. Add TikTok in Social settings, then choose either account or both in the web publisher." },
-        { question: "Do I need Creator to publish to TikTok?", answer: "Creator is required for scheduling posts for later. Publishing a finished clip now is available without Creator on hosted SupoClip." },
-        { question: "What about Instagram publishing?", answer: "Direct Instagram publishing isn’t available yet. You can still download a finished clip and upload it to Instagram yourself." },
+        { question: "Já conectei o YouTube. Preciso mudar algo?", answer: "Mantenha sua conexão com o YouTube. Adicione o TikTok nas configurações sociais e escolha qualquer uma das contas ou ambas no publicador web." },
+        { question: "Preciso do plano Criador para publicar no TikTok?", answer: "O plano Criador é necessário para agendar publicações com antecedência. Publicar um clipe pronto imediatamente está disponível sem o Criador no SupoClip." },
+        { question: "E a publicação no Instagram?", answer: "A publicação direta no Instagram ainda não está disponível. Você pode baixar o clipe finalizado e publicá-lo diretamente pelo aplicativo do Instagram." },
       ]}
-      cta={{ title: "Connect TikTok and publish your next clip", body: "Already have a finished clip? Connect your account, open the clip, and choose Publish.", label: "Connect TikTok", href: "/settings/social" }}
+      cta={{ title: "Conecte o TikTok e publique seu próximo clipe", body: "Já tem um clipe pronto? Conecte sua conta, abra o clipe e escolha Publicar.", label: "Conectar TikTok", href: "/settings/social" }}
     >
       <p>
-        TikTok publishing is live on hosted SupoClip. If you’ve been downloading finished clips just
-        to upload them to TikTok, you can now keep that step inside SupoClip too.
+        A publicação no TikTok já está disponível no SupoClip. Se você baixava clipes prontos apenas
+        para publicá-los no TikTok, agora pode fazer essa etapa diretamente pelo SupoClip.
       </p>
       <p>
-        YouTube publishing is already available, and the web publisher now lets you select more than
-        one connected account. Pick TikTok, YouTube, or both for the same clip.
+        A publicação no YouTube já está disponível, e o publicador web agora permite selecionar mais de
+        uma conta conectada. Escolha TikTok, YouTube ou ambos para o mesmo clipe.
       </p>
 
       <section aria-labelledby="whats-live" className="space-y-5">
-        <h2 id="whats-live">From finished clip to published post</h2>
+        <h2 id="whats-live">Do clipe pronto à publicação</h2>
         <div className="not-prose flex flex-wrap items-center gap-4 rounded-xl border bg-muted/30 p-5">
           <span className="inline-flex items-center gap-2 font-semibold"><SocialProviderIcon provider="tiktok" className="size-6" />TikTok</span>
           <span aria-hidden="true" className="text-muted-foreground">+</span>
           <span className="inline-flex items-center gap-2 font-semibold"><SocialProviderIcon provider="youtube" className="size-6" />YouTube</span>
         </div>
         <p>
-          Keep using SupoClip to find moments, edit captions, and review your clips. When a clip is
-          ready, send it to a connected account from its Publish menu. You choose the caption and
-          the privacy settings available for each account before submitting.
+          Continue usando o SupoClip para encontrar os melhores momentos, editar legendas e revisar seus cortes. Quando o clipe estiver
+          pronto, envie-o para uma conta conectada a partir do menu Publicar. Você escolhe a legenda e
+          as opções de visibilidade de cada conta antes de enviar.
         </p>
       </section>
 
       <section aria-labelledby="first-post" className="space-y-5">
-        <h2 id="first-post">Publish your first TikTok clip</h2>
+        <h2 id="first-post">Publique seu primeiro clipe no TikTok</h2>
         <ol>
-          <li>Open <Link href="/settings/social">Social settings</Link>, choose TikTok, and complete the connection. Check that you’ve connected the account you want to post to.</li>
-          <li>Open a finished clip on the web and choose <strong>Publish</strong>.</li>
-          <li>Select your TikTok account. Review the caption, hashtags, and privacy setting. TikTok uses the caption rather than the clip’s title.</li>
-          <li>Submit the post, then check its status in Social settings.</li>
+          <li>Abra as <Link href="/settings/social">Configurações sociais</Link>, escolha o TikTok e conclua a conexão. Verifique se conectou a conta desejada.</li>
+          <li>Abra um clipe finalizado na web e clique em <strong>Publicar</strong>.</li>
+          <li>Selecione sua conta do TikTok. Revise a legenda, hashtags e configuração de privacidade. O TikTok usa a legenda no lugar do título do clipe.</li>
+          <li>Envie a publicação e acompanhe o status nas configurações sociais.</li>
         </ol>
         <p>
-          Before posting, play the whole clip once. Check the opening, the cut at the end, and any
-          names or numbers in the captions. Publishing is quicker now; that last review still matters.
+          Antes de postar, reproduza o clipe completo uma vez. Confira o início, o corte final e os
+          nomes ou números nas legendas. Publicar ficou mais rápido, mas a revisão final continua essencial.
         </p>
       </section>
 
       <section aria-labelledby="both-platforms" className="space-y-5">
-        <h2 id="both-platforms">Post to TikTok and YouTube in one go</h2>
+        <h2 id="both-platforms">Publique no TikTok e no YouTube de uma só vez</h2>
         <p>
-          The account picker on the web is now a selector. Connect both accounts, tick TikTok and
-          YouTube in the Publish window, and review the privacy setting for each destination.
-          You don’t need to open a second publishing window for the same clip.
+          A seleção de contas na web agora permite escolher múltiplos destinos. Conecte ambas as contas, marque TikTok e
+          YouTube na janela de publicação e revise a privacidade para cada destino.
+          Não é necessário abrir duas janelas separadas para o mesmo clipe.
         </p>
         <p>
-          The selected accounts share the post’s title, caption, and hashtags. If you want different
-          wording for each platform, publish to one account at a time. After submitting to both,
-          check each account’s status before trying again if something needs attention.
+          As contas selecionadas compartilham o título, a legenda e as hashtags. Se preferir
+          textos diferentes para cada plataforma, publique em uma conta de cada vez.
         </p>
       </section>
 
       <section aria-labelledby="scheduling" className="space-y-5">
-        <h2 id="scheduling">Plan ahead with Creator</h2>
+        <h2 id="scheduling">Planeje com antecedência no Criador</h2>
         <p>
-          On <strong>Creator</strong>, you can turn on <strong>Schedule for later</strong> and choose
-          a date and time instead of publishing now. When you select both accounts on the web,
-          that schedule applies to both destinations.
+          No plano <strong>Criador</strong>, você pode ativar a opção <strong>Agendar para depois</strong> e escolher
+          a data e a hora em vez de publicar na hora. Ao selecionar ambas as contas,
+          o agendamento será aplicado a ambos os destinos.
         </p>
         <p>
-          Review scheduled posts in <Link href="/settings/social">Social settings</Link>. A queued
-          or scheduled status means the post hasn’t finished publishing yet.
+          Acompanhe suas postagens agendadas em <Link href="/settings/social">Configurações sociais</Link>.
         </p>
       </section>
-
-      <p>
-        This launch is for the hosted app. Self-hosted installations need their own social-provider
-        configuration. If you’re using hosted SupoClip, head to Social settings to connect TikTok.
-      </p>
     </ArticleShell>
   );
 }

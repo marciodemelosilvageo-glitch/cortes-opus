@@ -35,6 +35,7 @@ import { Kbd } from "@/components/ui/kbd";
 import { useSession } from "@/lib/auth-client";
 import { useBillingSummary } from "@/hooks/use-billing-summary";
 import { billingPlanMessageKey } from "@/lib/billing-plans";
+import { monetizationEnabled } from "@/lib/monetization";
 import { hasPaidAccess } from "@/lib/subscription-status";
 import { trackEvent } from "@/lib/analytics";
 import { track } from "@/lib/datafast";
@@ -239,6 +240,7 @@ export default function HomeApp() {
   const [upgradeReason, setUpgradeReason] = useState<UpgradeReason | null>(null);
   const [lastUpgradeReason, setLastUpgradeReason] = useState<UpgradeReason>({ kind: "start" });
   const openUpgrade = useCallback((reason: UpgradeReason) => {
+    if (!monetizationEnabled) return;
     setLastUpgradeReason(reason);
     setUpgradeReason(reason);
   }, []);
@@ -600,6 +602,7 @@ export default function HomeApp() {
   });
 
   const canUploadCustomFonts =
+    !monetizationEnabled ||
     !billingSummary?.monetization_enabled ||
     hasPaidAccess(billingSummary.plan, billingSummary.subscription_status, billingSummary.subscription_provider);
 
@@ -608,8 +611,8 @@ export default function HomeApp() {
   const previewFontFamily = fontFamily ?? selectedTemplate?.font_family ?? "TikTokSans-Regular";
   const previewFontSize = fontSize ?? selectedTemplate?.font_size ?? 24;
   const previewFontColor = fontColor ?? selectedTemplate?.font_color ?? "#FFFFFF";
-  const generationRequiresUpgrade = Boolean(billingSummary?.monetization_enabled && !billingSummary.can_create_task);
-  const upgradeState = billingSummary?.monetization_enabled ? getUpgradeState(billingSummary) : null;
+  const generationRequiresUpgrade = Boolean(monetizationEnabled && billingSummary?.monetization_enabled && !billingSummary.can_create_task);
+  const upgradeState = monetizationEnabled && billingSummary?.monetization_enabled ? getUpgradeState(billingSummary) : null;
   // Users can explore every option; the plan prompt only appears when they hit Generate.
   const controlsDisabled = isLoading;
   const hasSource = sourceType === "upload" ? Boolean(file) : Boolean(url.trim());
@@ -805,12 +808,14 @@ export default function HomeApp() {
 
       if (!startResponse.ok) {
         const info = await parseApiError(startResponse, t("errors.api", { status: startResponse.status }));
-        const upgradeForError = upgradeReasonForError(info.code, info.detail, upgradeState?.nextPlan?.youtubeMaxMinutes);
-        if (upgradeForError) {
-          openUpgrade(upgradeForError);
-          setIsLoading(false);
-          setStatusMessage("");
-          return;
+        if (monetizationEnabled) {
+          const upgradeForError = upgradeReasonForError(info.code, info.detail, upgradeState?.nextPlan?.youtubeMaxMinutes);
+          if (upgradeForError) {
+            openUpgrade(upgradeForError);
+            setIsLoading(false);
+            setStatusMessage("");
+            return;
+          }
         }
         throw new Error(formatSupportMessage({ ...info, message: workflowErrorMessage(info) ?? info.message }));
       }
@@ -855,7 +860,7 @@ export default function HomeApp() {
     );
   }
 
-  const limitNote = billingSummary?.max_youtube_duration_seconds
+  const limitNote = monetizationEnabled && billingSummary?.max_youtube_duration_seconds
     ? t("limitNote", {
         plan: tCommon(`plans.${billingPlanMessageKey(billingSummary.plan)}`),
         minutes: billingSummary.max_youtube_duration_seconds / 60,
@@ -865,14 +870,14 @@ export default function HomeApp() {
   return (
     <AppShell>
       <main className="mx-auto w-full max-w-5xl px-4 pb-20 pt-10 sm:px-8 md:pt-[12vh]">
-        {billingSummary?.cancel_at && billingSummary.subscription_provider === "stripe" && (
+        {monetizationEnabled && billingSummary?.cancel_at && billingSummary.subscription_provider === "stripe" && (
           <SubscriptionCancelBanner
             cancelAt={billingSummary.cancel_at}
             onRestarted={() => updateBillingSummary({ cancel_at: null })}
             className="mb-8"
           />
         )}
-        {upgradeState?.needsPayment && <PaymentFailedBanner className="mb-8" />}
+        {monetizationEnabled && upgradeState?.needsPayment && <PaymentFailedBanner className="mb-8" />}
 
         <div className="mx-auto max-w-3xl animate-rise">
           <h1 className="text-center font-display text-3xl font-bold tracking-tight sm:text-[2.6rem] sm:leading-tight">
@@ -882,7 +887,7 @@ export default function HomeApp() {
             {t(`subtitleByWorkflow.${activeWorkflow}`)}
           </p>
 
-          {upgradeState && <PlanStatusNudge state={upgradeState} onUpgrade={openUpgrade} />}
+          {monetizationEnabled && upgradeState && <PlanStatusNudge state={upgradeState} onUpgrade={openUpgrade} />}
 
           <VideoDownloadStatus />
 
@@ -1202,7 +1207,7 @@ export default function HomeApp() {
                               <Upload className="size-3" />{isUploadingFont ? t("status.uploadingFont") : t("uploadFont")}
                             </Button>
                           </div>
-                          {!canUploadCustomFonts && (
+                          {!canUploadCustomFonts && monetizationEnabled && (
                             <button type="button" onClick={() => openUpgrade({ kind: "custom_fonts" })} className="text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground">
                               {t("customFontsPaid")}
                             </button>
@@ -1409,13 +1414,15 @@ export default function HomeApp() {
           )}
         </section>
       </main>
-      <UpgradeDialog
-        open={upgradeReason !== null}
-        onOpenChange={(open) => { if (!open) setUpgradeReason(null); }}
-        reason={upgradeReason ?? lastUpgradeReason}
-        billing={billingSummary}
-        source="home"
-      />
+      {monetizationEnabled && (
+        <UpgradeDialog
+          open={upgradeReason !== null}
+          onOpenChange={(open) => { if (!open) setUpgradeReason(null); }}
+          reason={upgradeReason ?? lastUpgradeReason}
+          billing={billingSummary}
+          source="home"
+        />
+      )}
     </AppShell>
   );
 }
@@ -1504,7 +1511,7 @@ function PlanStatusNudge({
   const refreshes = resetsOn ? t("nudge.refreshesOn", { date: resetsOn }) : t("nudge.refreshesNext");
   const nextPlanName = nextPlan ? tCommon(`plans.${billingPlanMessageKey(nextPlan.id)}`) : "";
 
-  if (state.needsPayment) return null;
+  if (!monetizationEnabled || state.needsPayment) return null;
 
   if (!state.isPaid) {
     const entry = getPublicBillingPlans()[0];

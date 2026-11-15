@@ -33,8 +33,8 @@ ACTIVE_KEY = "user_video_active:{user_id}"
 SLOT_TTL_SECONDS = 6 * 60 * 60
 
 UPLOAD_WAIT_KEY = "upload_wait:{task_id}"
-UPLOAD_WAIT_MESSAGE = "Saving your upload..."
-UPLOAD_LOST_MESSAGE = "The uploaded video could not be saved. Upload it again to retry."
+UPLOAD_WAIT_MESSAGE = "Salvando seu envio..."
+UPLOAD_LOST_MESSAGE = "O vídeo enviado não pôde ser salvo. Envie novamente para tentar."
 
 _ACQUIRE_LUA = """
 local key = KEYS[1]

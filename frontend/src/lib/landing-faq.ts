@@ -1,8 +1,18 @@
 import { getPublicBillingPlans } from "@/lib/billing-plans";
+import { monetizationEnabled } from "@/lib/monetization";
 
 type Translate = (key: string, values?: Record<string, string | number>) => string;
 
-const FAQ_KEYS = ["sources", "selection", "minutes", "publishing", "watermark", "languages", "selfHost", "cancel"] as const;
+const FAQ_KEYS = [
+  "sources",
+  "selection",
+  ...(monetizationEnabled ? ["minutes" as const] : []),
+  "publishing",
+  "watermark",
+  "languages",
+  "selfHost",
+  ...(monetizationEnabled ? ["cancel" as const] : []),
+] as const;
 
 /** Landing page FAQ, shared by the page and its FAQPage structured data. */
 export function getLandingFaqs(t: Translate) {

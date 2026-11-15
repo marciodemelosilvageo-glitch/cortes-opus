@@ -291,6 +291,7 @@ OUTPUT CONTRACT:
 - Do not use "segment" as an output field. Use "text".
 - "virality" must include: "hook_score", "engagement_score", "value_score", "shareability_score", "total_score", "hook_type", and "virality_reasoning".
 - Every returned segment must be {minimum}-{maximum} seconds long. Prefer {ideal_minimum}-{ideal_maximum} seconds.
+- All output string values (including 'hook_title', 'summary', 'key_topics', 'reasoning', and 'virality_reasoning') MUST be in natural Brazilian Portuguese (pt-BR).
 
 CORE OBJECTIVES:
 1. Identify segments that would be compelling on social media platforms
@@ -364,8 +365,8 @@ HOOK TITLES ("hook_title" per segment):
 - Stay grounded: only promise what the clip actually delivers; never invent facts or numbers
 - Do not simply repeat the first spoken words verbatim; reframe them as a headline
 - Plain text only: no hashtags, no emojis, no quotes around the title
-- Write it in the same language as the transcript
-- Good examples: "The $40k mistake I keep seeing", "Why nobody tells you this about VC", "Do this before your next interview"
+- Write it in natural Brazilian Portuguese (pt-BR)
+- Good examples: "O maior erro financeiro que vejo", "O que ninguém te conta sobre startups", "Faça isso antes da sua próxima entrevista"
 
 CLIP BOUNDARIES — OPENING AND ENDING:
 - start_time is the first word of a sentence a new viewer can understand with no prior context
@@ -634,6 +635,7 @@ Rules:
 - Rank a candidate last when its speech says the picture is interrupted, unavailable or broken (a technical problem, "these images cannot be shown"); it plays over a slate, not footage.
 - Rank every candidate exactly once, using the given candidate_id values.
 - Scores are comparative: spread them out so better clips clearly score higher. The best candidate should usually land between 80 and 95; weak, contextless, or filler candidates belong below 50.
+- Write all string values (including "reason") in natural Brazilian Portuguese (pt-BR).
 - Return valid JSON only, with a "ranking" list ordered from best to worst."""
 
 _rerank_agent: Optional[Agent[None, CandidateRanking]] = None
@@ -889,7 +891,8 @@ JSON-only output requirements:
 - Top-level keys: "most_relevant_segments", "summary", "key_topics".
 - Segment keys: "start_time", "end_time", "text", "relevance_score", "reasoning", "virality", "hook_title".
 - Optional segment keys "hook_start_time"/"hook_end_time": null unless a later 2-5 second line stands alone and the real opening is already a complete setup. The clip is not replayed from that line by default.
-- "hook_title" is a 3-9 word plain-text headline for the clip, in the transcript's language, grounded in the segment (no hashtags, emojis, or quotes).
+- "hook_title" is a 3-9 word plain-text headline for the clip, in Brazilian Portuguese (pt-BR), grounded in the segment (no hashtags, emojis, or quotes).
+- All output string values ('hook_title', 'summary', 'key_topics', 'reasoning', 'virality_reasoning') must be written in Brazilian Portuguese (pt-BR).
 - Virality keys: "hook_score", "engagement_score", "value_score", "shareability_score", "total_score", "hook_type", "virality_reasoning".
 - Do not return segments shorter than {bounds.minimum} seconds or longer than {bounds.maximum} seconds.
 

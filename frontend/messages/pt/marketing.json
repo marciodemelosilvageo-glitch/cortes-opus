@@ -49,14 +49,14 @@
   },
   "links": {
     "blog_tiktok_publishing_is_live": {
-      "eyebrow": "Product update",
-      "title": "TikTok publishing is now live in SupoClip",
-      "label": "TikTok publishing",
-      "description": "Connect TikTok, publish to TikTok and YouTube together on the web, and schedule ahead on Creator."
+      "eyebrow": "Novidade do produto",
+      "title": "Publicação no TikTok agora disponível no SupoClip",
+      "label": "Publicação no TikTok",
+      "description": "Conecte o TikTok, publique no TikTok e no YouTube juntos pela web e agende publicações."
     },
     "demo": {
-      "label": "Demo",
-      "eyebrow": "Demo",
+      "label": "Demonstração",
+      "eyebrow": "Demonstração",
       "title": "Veja clipes reais que o SupoClip fez a partir de um vídeo longo",
       "description": "Assista ao resultado e pule para cada momento no vídeo original."
     },
@@ -127,46 +127,46 @@
       "label": "Novidades"
     },
     "blog_podcast_to_shorts": {
-      "eyebrow": "Podcast clips",
-      "title": "Turn a video podcast into Shorts and Reels",
-      "label": "Podcast to Shorts",
-      "description": "Choose complete ideas, correct captions, and follow real clips back to the source."
+      "eyebrow": "Clipes de podcast",
+      "title": "Transforme um videocast em Shorts e Reels",
+      "label": "Podcast para Shorts",
+      "description": "Selecione ideias completas, corrija legendas e rastreie os clipes até a gravação original."
     },
     "blog_find_best_moments_in_video": {
-      "eyebrow": "Highlight selection",
-      "title": "Find the best moments in a long video",
-      "label": "Find video highlights",
-      "description": "Use a practical checklist for hooks, context, payoff, and clean boundaries."
+      "eyebrow": "Seleção de destaques",
+      "title": "Encontre os melhores momentos em um vídeo longo",
+      "label": "Destaques em vídeo",
+      "description": "Use um checklist prático para ganchos, contexto, desfecho e cortes limpos."
     },
     "blog_twitch_vod_to_shorts": {
-      "eyebrow": "Stream clips",
-      "title": "Turn Twitch VODs into TikTok clips and Shorts",
-      "label": "Twitch VOD to Shorts",
-      "description": "Review spoken highlights, preserve gameplay context, and export vertical clips."
+      "eyebrow": "Clipes de live",
+      "title": "Transforme gravações da Twitch em clipes para redes",
+      "label": "Lives para Shorts",
+      "description": "Corte reações e jogadas marcantes de transmissões longas sem perder o ritmo."
     },
     "blog_repurpose_webinar_clips": {
-      "eyebrow": "Webinar repurposing",
-      "title": "Repurpose a webinar into social media clips",
-      "label": "Webinar clips",
-      "description": "Turn audience questions and useful answers into clips with readable slides and captions."
+      "eyebrow": "Reaproveitamento de webinars",
+      "title": "Reaproveite webinars em clipes para redes sociais",
+      "label": "Clipes de webinars",
+      "description": "Transforme perguntas do público e respostas úteis em cortes com slides legíveis."
     },
     "blog_word_by_word_video_captions": {
-      "eyebrow": "Caption editing",
-      "title": "Add readable word-by-word captions to clips",
-      "label": "Word-by-word captions",
-      "description": "Correct the transcript, choose a style, and keep subtitles clear of platform controls."
+      "eyebrow": "Edição de legendas",
+      "title": "Adicione legendas palavra por palavra aos seus clipes",
+      "label": "Legendas palavra por palavra",
+      "description": "Corrija a transcrição, escolha o estilo e mantenha o texto fora da área dos botões das redes."
     },
     "blog_schedule_week_of_youtube_shorts": {
-      "eyebrow": "Publishing workflow",
-      "title": "Create and schedule a week of YouTube Shorts",
-      "label": "Schedule YouTube Shorts",
-      "description": "Build a distinct batch, review each clip, and verify scheduled publication."
+      "eyebrow": "Fluxo de publicação",
+      "title": "Crie e agende uma semana de YouTube Shorts",
+      "label": "Agendar YouTube Shorts",
+      "description": "Produza um lote completo, revise cada clipe e confirme os agendamentos."
     },
     "blog_open_source_video_clippers": {
-      "eyebrow": "Open-source comparison",
-      "title": "Compare SupoClip, Clips AI, and Auto-Editor",
-      "label": "Open-source video clippers",
-      "description": "Choose an app, Python library, or command-line tool for the editing job you need."
+      "eyebrow": "Comparativo open-source",
+      "title": "Compare SupoClip, Clips AI e Auto-Editor",
+      "label": "Cortadores de vídeo open source",
+      "description": "Escolha um aplicativo, biblioteca Python ou linha de comando ideal para a sua edição."
     },
     "faq": {
       "label": "Perguntas frequentes"

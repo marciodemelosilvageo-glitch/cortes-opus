@@ -178,7 +178,7 @@ async def process_video_task(
                         f"dead_letter:{task_id}", json.dumps(payload)
                     )
                     await ctx["redis"].sadd("tasks:dead_letter", task_id)
-                    await progress.error("Task failed permanently after retries")
+                    await progress.error("A tarefa falhou definitivamente após tentativas")
             except Exception:
                 logger.exception("Failed to persist dead-letter payload")
             # Error will be caught by arq and task status will be updated

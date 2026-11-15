@@ -85,9 +85,9 @@
     "videosWith": "vídeos por mês com {plan}",
     "sample": "e é por isso",
     "ownFont": "ou a sua própria .ttf",
-    "serif": "Serif",
-    "display": "Display",
-    "mono": "Mono",
+    "serif": "Serifada",
+    "display": "Exibição",
+    "mono": "Monoespaçada",
     "hoursUpFrom": "horas de vídeo por mês, antes {count}",
     "hoursWith": "horas de vídeo por mês com {plan}"
   },

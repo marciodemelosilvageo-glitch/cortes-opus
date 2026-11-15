@@ -62,8 +62,8 @@ from ..stream_source import cleanup_stream_path, cleanup_stream_task, seed_strea
 
 logger = logging.getLogger(__name__)
 PROCESSING_CACHE_VERSION = "20260319_grounded_segments_v1"
-# What one rendered output is called in progress messages ("Creating part 2/5...").
-OUTPUT_NOUNS = {"series": "part", "recap": "recap", "trailer": "trailer"}
+# What one rendered output is called in progress messages ("Criando parte 2/5...").
+OUTPUT_NOUNS = {"series": "parte", "recap": "resumo", "trailer": "trailer"}
 # Workflows whose outputs only make sense together: a failure leaves no clips.
 ALL_OR_NOTHING_WORKFLOWS = ("series", "recap", "trailer")
 
@@ -139,8 +139,8 @@ _INTERNAL_ERRORS = (
     OSError, LookupError, TypeError, AttributeError, NameError, AssertionError,
     ArithmeticError, SubprocessError, SQLAlchemyError,
 )
-KEPT_OUTPUTS_ERROR = "Your finished clips are saved. Retry generation to create the missing ones."
-_GENERIC_ERROR = "Something went wrong while generating your clips. Retry generation to try again."
+KEPT_OUTPUTS_ERROR = "Seus clipes concluídos foram salvos. Tente novamente para gerar os que faltam."
+_GENERIC_ERROR = "Ocorreu um erro ao gerar seus clipes. Tente novamente."
 
 
 def user_facing_error(error: Exception) -> str:
@@ -593,7 +593,7 @@ class TaskService(ClipEditingMixin):
             # Update status to processing
             started = await self.task_repo.update_task_status(
                 self.db, task_id, "processing", progress=0,
-                progress_message="Starting...",
+                progress_message="Iniciando...",
                 expected_statuses=["queued", "processing"],
             )
             if started is False:
@@ -767,7 +767,7 @@ class TaskService(ClipEditingMixin):
             wants_previews: Optional[bool] = None  # checked once a clip renders
             # (virality, render order, still) for each saved clip.
             clip_previews: list[tuple[int, int, ClipPreview]] = []
-            noun = OUTPUT_NOUNS.get(spec.workflow, "clip")
+            noun = OUTPUT_NOUNS.get(spec.workflow, "clipe")
             rendered_meta: list[tuple[Dict[str, Any], list]] = []
 
             for i, segment in enumerate(segments_to_render):
@@ -782,7 +782,7 @@ class TaskService(ClipEditingMixin):
                 ) if total_clips > 0 else 95
                 await update_progress(
                     clip_progress,
-                    f"Creating {noun} {i + 1}/{total_clips}...",
+                    f"Criando {noun} {i + 1}/{total_clips}...",
                 )
 
                 # A partial download is a concatenated timeline. Render against
@@ -938,14 +938,14 @@ class TaskService(ClipEditingMixin):
                 task_id,
                 "completed",
                 progress=100,
-                progress_message="Complete!",
+                progress_message="Concluído!",
                 expected_statuses=["processing"],
             )
             if completed is False:
                 raise TaskCancelled()
 
             if progress_callback:
-                await progress_callback(100, "Complete!", "completed")
+                await progress_callback(100, "Concluído!", "completed")
 
             await self.task_repo.update_task_runtime_metadata(
                 self.db,
@@ -1011,7 +1011,7 @@ class TaskService(ClipEditingMixin):
                     task_id,
                     "cancelled",
                     progress=0,
-                    progress_message="Cancelled by user",
+                    progress_message="Cancelado pelo usuário",
                     expected_statuses=["queued", "processing"],
                 )
                 raise
@@ -1218,7 +1218,7 @@ class TaskService(ClipEditingMixin):
                 "error",
                 progress=0,
                 progress_message=(
-                    "The queued job is no longer available. Please retry this generation."
+                    "A tarefa na fila não está mais disponível. Tente gerar novamente."
                 ),
                 expected_statuses=["queued"],
             )
@@ -1237,8 +1237,8 @@ class TaskService(ClipEditingMixin):
                 "error",
                 progress=0,
                 progress_message=(
-                    "Task stalled during processing (worker likely stopped or timed out). "
-                    "Check the worker logs (docker-compose logs -f worker) and try again."
+                    "A tarefa travou durante o processamento (o worker provavelmente parou ou expirou). "
+                    "Verifique os logs do worker (docker compose logs -f worker) e tente novamente."
                 ),
                 expected_statuses=["processing"],
             )
