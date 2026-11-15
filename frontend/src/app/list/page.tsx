@@ -358,32 +358,32 @@ export default function ListPage() {
     <main className={cn("mx-auto w-full max-w-7xl px-4 py-8 sm:px-8 md:py-10", selectedCount > 0 && "pb-32")}>
       <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div>
-          <h1 className="font-display text-3xl font-bold tracking-tight">{t("title")}</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">{t("title")}</h1>
+          <p className="mt-1 text-xs text-muted-foreground">
             {t("summary", { count: tasks.length })}
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <div className="relative flex-1 md:w-72 md:flex-none">
-            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               ref={searchRef}
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder={t("searchPlaceholder")}
               aria-label={t("searchLabel")}
-              className="h-9 rounded-lg bg-background pl-9 pr-8"
+              className="h-11 rounded-full border border-border/60 bg-black/[0.03] dark:bg-white/[0.06] pl-10 pr-9 text-xs"
             />
-            <Kbd className="absolute right-2 top-1/2 -translate-y-1/2">/</Kbd>
+            <Kbd className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md text-[10px]">esc</Kbd>
           </div>
-          <Button asChild size="sm" className="h-9 rounded-lg">
+          <Button asChild size="sm" className="h-11 min-h-[44px] rounded-full px-5 text-xs font-semibold">
             <Link href="/"><Plus className="size-4" /><span className="hidden sm:inline">{t("new")}</span></Link>
           </Button>
         </div>
       </div>
 
       {!isLoading && !error && tasks.length > 0 && (
-        <div className="scrollbar-none -mx-4 mt-6 flex items-center gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+        <div className="scrollbar-none -mx-4 mt-6 flex items-center gap-2 overflow-x-auto px-4 sm:mx-0 sm:px-0">
           <div className="flex shrink-0 items-center gap-1.5" role="tablist" aria-label={t("filterLabel")}>
             {filters.map((item) => (
               <button
@@ -393,16 +393,18 @@ export default function ListPage() {
                 aria-selected={filter === item.id}
                 onClick={() => setFilter(item.id)}
                 className={cn(
-                  "inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full border px-3 text-xs font-medium transition-colors",
-                  filter === item.id ? "border-foreground bg-foreground text-background" : "bg-background text-muted-foreground hover:text-foreground",
+                  "inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full border border-border/60 px-3.5 text-xs font-semibold tracking-tight transition-all active:scale-95 cursor-pointer",
+                  filter === item.id
+                    ? "border-primary bg-primary/10 text-primary dark:bg-primary/20"
+                    : "bg-black/[0.02] dark:bg-white/[0.04] text-muted-foreground hover:text-foreground",
                 )}
               >
                 {item.label}
-                <span className={cn("tabular-nums", filter === item.id ? "opacity-70" : "opacity-60")}>{item.count}</span>
+                <span className={cn("tabular-nums text-[11px]", filter === item.id ? "opacity-90" : "opacity-60")}>{item.count}</span>
               </button>
             ))}
           </div>
-          <div className="ml-auto inline-flex shrink-0 rounded-lg border bg-background p-0.5" role="tablist" aria-label={t("sortLabel")}>
+          <div className="ml-auto inline-flex shrink-0 rounded-xl border border-border/40 bg-black/[0.04] dark:bg-white/[0.06] p-1" role="tablist" aria-label={t("sortLabel")}>
             {(["newest", "video"] as const).map((value) => (
               <button
                 key={value}
@@ -411,8 +413,8 @@ export default function ListPage() {
                 aria-selected={sort === value}
                 onClick={() => setSort(value)}
                 className={cn(
-                  "h-7 rounded-md px-3 text-xs font-medium transition-colors",
-                  sort === value ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground",
+                  "h-7 rounded-lg px-3 text-xs font-semibold tracking-tight transition-all active:scale-95 cursor-pointer",
+                  sort === value ? "bg-card text-foreground shadow-xs" : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 {t(`sort.${value}`)}
@@ -483,27 +485,26 @@ export default function ListPage() {
           style={{ animation: "command-bar-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) both" }}
         >
           <div
-            className="pointer-events-auto flex items-center gap-1 rounded-2xl border border-stone-800 bg-stone-950 px-2 py-2 shadow-2xl dark:border-stone-700 dark:bg-stone-800"
-            style={{ animation: "command-bar-pulse 3s ease-in-out infinite" }}
+            className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-border/60 bg-card/90 ios-blur backdrop-blur-2xl px-3 py-2 shadow-2xl"
           >
             {/* Select all checkbox */}
-            <div className="flex items-center gap-2.5 pl-2 pr-3">
+            <div className="flex items-center gap-2 pl-2 pr-2.5">
               <Checkbox
                 checked={allVisibleSelected ? true : someSelected ? "indeterminate" : false}
                 onCheckedChange={handleToggleAllVisible}
                 disabled={activeBatchAction !== null}
                 aria-label={t("selectAll")}
-                className="border-stone-600 data-[state=checked]:bg-white data-[state=checked]:text-stone-950 data-[state=checked]:border-white data-[state=indeterminate]:bg-stone-500 data-[state=indeterminate]:border-stone-500"
+                className="data-[state=checked]:bg-primary data-[state=checked]:text-white data-[state=checked]:border-primary"
               />
-              <span className="text-sm font-medium text-white tabular-nums">
+              <span className="text-xs font-semibold text-foreground tabular-nums">
                 {selectedCount}
-                <span className="text-stone-400 ml-0.5">
+                <span className="text-muted-foreground ml-0.5">
                   {" "}{t("selected")}
                 </span>
               </span>
             </div>
 
-            <Separator orientation="vertical" className="h-6 bg-stone-700 dark:bg-stone-600" />
+            <Separator orientation="vertical" className="h-5 bg-border/60" />
 
             {/* Action buttons */}
             <div className="flex items-center gap-0.5 px-1">
