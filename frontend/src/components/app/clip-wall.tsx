@@ -111,56 +111,56 @@ export function ClipTile({ clip, taskId, busy, best, editable, partTotal, onOpen
         type="button"
         onClick={onOpen}
         aria-label={t("preview", { title })}
-        className="block w-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        className="block w-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 transition-transform active:scale-[0.98]"
       >
         <ClipCover
           src={getClipUrl(clip.video_url, clip.filename)}
-          className="aspect-[9/16] rounded-xl ring-1 ring-black/5 transition-shadow duration-200 group-hover:shadow-xl"
+          className="aspect-[9/16] rounded-2xl border border-border/40 shadow-xs transition-shadow duration-200 group-hover:shadow-lg"
         >
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/25" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/25" />
           {isPart(clip) ? (
-            <span className="absolute left-2 top-2 rounded-full bg-black/60 px-2 py-0.5 text-[10px] font-semibold tabular-nums text-white backdrop-blur">
+            <span className="absolute left-2.5 top-2.5 rounded-full bg-black/60 ios-blur px-2.5 py-0.5 text-[10px] font-semibold tabular-nums text-white">
               {partTotal ? t("partOf", { n: clip.part_number, total: partTotal }) : t("partLabel", { n: clip.part_number })}
             </span>
           ) : best && (
-            <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-brand px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand-foreground shadow">
+            <span className="absolute left-2.5 top-2.5 inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white shadow-sm">
               <Flame className="size-3" />{t("topPick")}
             </span>
           )}
           {showsScore(clip) && (
-            <span className="absolute right-2 top-2 rounded-full bg-black/55 text-white backdrop-blur">
-              <ScoreRing score={clip.virality_score} size={36} />
+            <span className="absolute right-2.5 top-2.5 rounded-full bg-black/60 ios-blur p-0.5 text-white">
+              <ScoreRing score={clip.virality_score} size={34} />
             </span>
           )}
           <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
-            <span className="flex size-12 items-center justify-center rounded-full bg-white/90 text-black shadow-lg"><Play className="ml-0.5 size-5 fill-current" /></span>
+            <span className="flex size-12 items-center justify-center rounded-full bg-white/95 text-black shadow-xl transition-transform active:scale-90"><Play className="ml-0.5 size-5 fill-current" /></span>
           </span>
-          <span className="absolute bottom-2 right-2 rounded bg-black/60 px-1.5 py-0.5 text-[11px] font-medium tabular-nums text-white">{formatClipDuration(clip.duration)}</span>
+          <span className="absolute bottom-2.5 right-2.5 rounded-full bg-black/60 ios-blur px-2 py-0.5 text-[10px] font-semibold tabular-nums text-white">{formatClipDuration(clip.duration)}</span>
         </ClipCover>
       </button>
       <div className="mt-2.5 px-0.5">
         {why ? (
           <Tooltip>
             <TooltipTrigger asChild>
-              <h3 tabIndex={0} className="line-clamp-2 cursor-default text-sm font-semibold leading-snug focus-visible:outline-none focus-visible:underline">{title}</h3>
+              <h3 tabIndex={0} className="line-clamp-2 cursor-default text-xs font-semibold leading-snug focus-visible:outline-none focus-visible:underline text-foreground">{title}</h3>
             </TooltipTrigger>
-            <TooltipContent className="max-w-64">{why}</TooltipContent>
+            <TooltipContent className="max-w-64 font-normal text-xs">{why}</TooltipContent>
           </Tooltip>
         ) : (
-          <h3 className="line-clamp-2 text-sm font-semibold leading-snug">{title}</h3>
+          <h3 className="line-clamp-2 text-xs font-semibold leading-snug text-foreground">{title}</h3>
         )}
-        <p className="mt-0.5 text-xs tabular-nums text-muted-foreground">{clip.start_time} – {clip.end_time}</p>
-        <div className="mt-2 flex items-center gap-1">
-          <Button size="sm" variant="outline" className="h-7 flex-1 px-2 text-xs" onClick={onDownload} disabled={busy} aria-label={t("downloadNamed", { title })}>
+        <p className="mt-0.5 text-[11px] tabular-nums text-muted-foreground">{clip.start_time} – {clip.end_time}</p>
+        <div className="mt-2.5 flex items-center gap-1.5">
+          <Button size="sm" variant="outline" className="h-8 min-h-[34px] flex-1 rounded-full px-2.5 text-xs font-semibold" onClick={onDownload} disabled={busy} aria-label={t("downloadNamed", { title })}>
             {busy ? <Loader2 className="size-3.5 animate-spin" /> : <Download className="size-3.5" />}<span className="hidden @min-[190px]:inline">{t("download")}</span>
           </Button>
           {editable && (
-            <Button size="sm" variant="outline" className="h-7 px-2 text-xs" asChild>
+            <Button size="sm" variant="outline" className="h-8 min-h-[34px] rounded-full px-2.5 text-xs font-semibold" asChild>
               <Link href={`/tasks/${taskId}/edit?clip=${clip.id}`}><Scissors className="size-3.5" />{t("edit")}</Link>
             </Button>
           )}
           {onDelete && (
-            <Button size="icon-sm" variant="ghost" className="size-7 text-muted-foreground hover:bg-destructive/10 hover:text-destructive" onClick={onDelete} aria-label={t("deleteClip")}>
+            <Button size="icon-sm" variant="ghost" className="size-8 rounded-full text-muted-foreground hover:bg-destructive/10 hover:text-destructive active:scale-95" onClick={onDelete} aria-label={t("deleteClip")}>
               <Trash2 className="size-3.5" />
             </Button>
           )}
@@ -210,18 +210,18 @@ export function ClipFocus({ clip, taskId, index, total, busy, editable, onNaviga
 
   return (
     <Dialog open={clip !== null} onOpenChange={(open) => { if (!open) onClose(); }}>
-      <DialogContent className="max-h-[92dvh] max-w-5xl gap-0 overflow-hidden p-0 md:grid-cols-[auto_1fr]">
+      <DialogContent className="max-h-[92dvh] max-w-5xl gap-0 overflow-hidden p-0 rounded-3xl border border-border/60 bg-card/95 ios-blur backdrop-blur-2xl shadow-2xl md:grid-cols-[auto_1fr]">
         {clip && (
           <>
-            <div className="relative flex items-center justify-center bg-stone-950 p-3 md:p-4">
-              <DynamicVideoPlayer key={clip.id} src={getClipUrl(clip.video_url, clip.filename)} autoPlay className="h-[min(58dvh,560px)]! md:h-[min(80dvh,640px)]!" />
+            <div className="relative flex items-center justify-center bg-black p-3 md:p-4">
+              <DynamicVideoPlayer key={clip.id} src={getClipUrl(clip.video_url, clip.filename)} autoPlay className="h-[min(58dvh,560px)]! md:h-[min(80dvh,640px)]! rounded-2xl overflow-hidden" />
             </div>
             <div className="flex min-h-0 flex-col overflow-y-auto">
-              <div className="flex items-center justify-between gap-2 border-b px-5 py-3 pr-12 text-xs text-muted-foreground">
-                <span className="tabular-nums">{t("position", { current: index + 1, total })}</span>
+              <div className="flex items-center justify-between gap-2 border-b border-border/40 px-5 py-3 pr-12 text-xs text-muted-foreground">
+                <span className="tabular-nums font-medium">{t("position", { current: index + 1, total })}</span>
                 <div className="flex items-center gap-1">
-                  <Button size="icon-sm" variant="ghost" onClick={() => onNavigate(-1)} aria-label={t("previous")}><ChevronLeft className="size-4" /></Button>
-                  <Button size="icon-sm" variant="ghost" onClick={() => onNavigate(1)} aria-label={t("next")}><ChevronRight className="size-4" /></Button>
+                  <Button size="icon-sm" variant="ghost" className="rounded-full size-8" onClick={() => onNavigate(-1)} aria-label={t("previous")}><ChevronLeft className="size-4" /></Button>
+                  <Button size="icon-sm" variant="ghost" className="rounded-full size-8" onClick={() => onNavigate(1)} aria-label={t("next")}><ChevronRight className="size-4" /></Button>
                 </div>
               </div>
               <div className="space-y-5 p-5">
@@ -483,7 +483,7 @@ export function ProcessingSlots({ status, progress, message, total, className, c
       {children}
       {Array.from({ length: empty }, (_, i) => (
         <div key={`slot-${i}`} aria-hidden className="animate-rise" style={{ animationDelay: `${i * 60}ms` }}>
-          <div className="relative aspect-[9/16] overflow-hidden rounded-xl bg-stone-100/70 ring-1 ring-black/[0.04] dark:bg-stone-900/60 dark:ring-white/5">
+          <div className="relative aspect-[9/16] overflow-hidden rounded-2xl bg-black/[0.04] dark:bg-white/[0.06] border border-border/40">
             {i === 0 && (
               <span className="absolute inset-[-30%] opacity-40 blur-2xl transition-[background] duration-1000"
                 style={{ background: `radial-gradient(circle at 50% 60%, oklch(0.87 0.05 ${hue}), transparent 60%)` }} />

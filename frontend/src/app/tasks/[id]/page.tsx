@@ -863,12 +863,12 @@ export default function TaskPage() {
 
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-8 md:py-8">
-      <Link href="/list" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+      <Link href="/list" className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/15 transition-all active:scale-95">
         <ArrowLeft className="size-3.5" />{t("back")}
       </Link>
 
       {task && (
-        <header className="mt-3 flex flex-wrap items-start justify-between gap-x-6 gap-y-4">
+        <header className="mt-4 flex flex-wrap items-start justify-between gap-x-6 gap-y-4">
           <div className="min-w-0 flex-[1_1_32rem]">
             {isEditing ? (
               <form className="flex items-center gap-2" onSubmit={(e) => { e.preventDefault(); void handleEditTitle(); }}>
@@ -876,33 +876,33 @@ export default function TaskPage() {
                   value={editedTitle}
                   onChange={(e) => setEditedTitle(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Escape") { setIsEditing(false); setEditedTitle(task.source_title); } }}
-                  className="h-auto py-1 font-display text-xl font-bold md:text-2xl"
+                  className="h-11 py-1 text-xl font-bold md:text-2xl rounded-xl"
                   aria-label={t("titleLabel")}
                   autoFocus
                 />
-                <Button type="submit" aria-label={t("saveTitle")} size="icon" disabled={!editedTitle.trim()}><Check className="size-4" /></Button>
-                <Button type="button" size="icon" variant="ghost" aria-label={t("cancelTitle")} onClick={() => { setIsEditing(false); setEditedTitle(task.source_title); }}><X className="size-4" /></Button>
+                <Button type="submit" aria-label={t("saveTitle")} size="icon" className="size-11 rounded-full" disabled={!editedTitle.trim()}><Check className="size-4" /></Button>
+                <Button type="button" size="icon" variant="ghost" className="size-11 rounded-full" aria-label={t("cancelTitle")} onClick={() => { setIsEditing(false); setEditedTitle(task.source_title); }}><X className="size-4" /></Button>
               </form>
             ) : (
               <div className="group flex items-start gap-2">
                 <div className="min-w-0">
-                  <h1 className={cn("min-w-0 break-words font-display text-xl font-bold tracking-tight md:text-2xl", isActive && "title-sheen")}>{task.source_title}</h1>
+                  <h1 className={cn("min-w-0 break-words text-2xl font-bold tracking-tight md:text-3xl text-foreground", isActive && "title-sheen")}>{task.source_title}</h1>
                   {plan?.title && workflow !== "topic" && workflow !== "highlights" && (
-                    <p className="mt-0.5 text-sm text-muted-foreground">{plan.title}</p>
+                    <p className="mt-1 text-xs text-muted-foreground font-medium">{plan.title}</p>
                   )}
                 </div>
                 {!readOnly && (
-                  <Button size="icon-sm" variant="ghost" aria-label={t("editTitle")} className="mt-0.5 shrink-0 text-muted-foreground opacity-100 md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100"
+                  <Button size="icon-sm" variant="ghost" aria-label={t("editTitle")} className="mt-1 shrink-0 rounded-full text-muted-foreground opacity-100 md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100"
                     onClick={() => { setIsEditing(true); setEditedTitle(task.source_title); }}>
-                    <Edit2 className="size-4" />
+                    <Edit2 className="size-3.5" />
                   </Button>
                 )}
               </div>
             )}
-            <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted-foreground">
+            <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-muted-foreground">
               {!isActive && <StatusBadge status={task.status} />}
               {workflowBadge && (
-                <span className="max-w-full truncate rounded-full border bg-background px-2.5 py-0.5 text-xs font-medium text-foreground">{workflowBadge}</span>
+                <span className="max-w-full truncate rounded-full border border-border/60 bg-black/[0.04] dark:bg-white/[0.06] px-3 py-1 text-xs font-semibold text-foreground">{workflowBadge}</span>
               )}
               {sourceVideoUrl ? (
                 <a href={sourceVideoUrl} target="_blank" rel="noopener noreferrer" title={t("originalVideo")} className="flex items-center gap-1.5 hover:text-foreground">
